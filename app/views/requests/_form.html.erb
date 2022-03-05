@@ -1,0 +1,77 @@
+<%= form_with(model: request) do |form| %>
+  <% if request.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+        <% request.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :requester_name, style: "display: block" %>
+    <%= form.text_field :requester_name %>
+  </div>
+
+  <div>
+    <%= form.label :requester_extension, style: "display: block" %>
+    <%= form.text_field :requester_extension %>
+  </div>
+
+  <div>
+    <%= form.label :requester_phone, style: "display: block" %>
+    <%= form.text_field :requester_phone %>
+  </div>
+
+  <div>
+    <%= form.label :requester_id, style: "display: block" %>
+    <%= form.text_field :requester_id %>
+  </div>
+
+  <div>
+    <%= form.label :requester_mail, style: "display: block" %>
+    <%= form.text_field :requester_mail %>
+  </div>
+
+  <div>
+    <%= form.label :requester_type, style: "display: block" %>
+    <%= form.text_field :requester_type %>
+  </div>
+
+  <div>
+    <%= form.label :student_id, style: "display: block" %>
+    <%= form.text_field :student_id %>
+  </div>
+
+  <div>
+    <%= form.label :student_assosiation, style: "display: block" %>
+    <%= form.text_field :student_assosiation %>
+  </div>
+
+  <div>
+    <%= form.label :work_location, style: "display: block" %>
+    <%= form.text_field :work_location %>
+  </div>
+
+  <div>
+    <%= form.label :work_building, style: "display: block" %>
+    <%= form.text_field :work_building %>
+  </div>
+
+  <div>
+    <%= form.label :work_type, style: "display: block" %>
+    <%= form.text_field :work_type %>
+  </div>
+
+  <div>
+    <%= form.label :work_description, style: "display: block" %>
+    <%= form.text_area :work_description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

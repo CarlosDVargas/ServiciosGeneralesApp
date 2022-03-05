@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  requester_name: MyString
+  requester_extension: MyString
+  requester_phone: MyString
+  requester_id: MyString
+  requester_mail: MyString
+  requester_type: MyString
+  student_id: MyString
+  student_assosiation: MyString
+  work_location: MyString
+  work_building: MyString
+  work_type: MyString
+  work_description: MyText
+
+two:
+  requester_name: MyString
+  requester_extension: MyString
+  requester_phone: MyString
+  requester_id: MyString
+  requester_mail: MyString
+  requester_type: MyString
+  student_id: MyString
+  student_assosiation: MyString
+  work_location: MyString
+  work_building: MyString
+  work_type: MyString
+  work_description: MyText
