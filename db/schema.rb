@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_05_180031) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_05_234823) do
   create_table "requests", force: :cascade do |t|
     t.string "requester_name"
     t.string "requester_extension"
@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_05_180031) do
     t.text "work_description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "pending"
   end
 
   create_table "users", force: :cascade do |t|
