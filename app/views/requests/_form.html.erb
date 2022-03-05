@@ -11,67 +11,98 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :requester_name, style: "display: block" %>
-    <%= form.text_field :requester_name %>
+  <div id="requester_information"> 
+    <p>Información del solicitante</p>
+    <div>
+      <p>
+        <%= form.label "Nombre completo", style: "display: block" %>
+        <%= form.text_field :requester_name %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Extensión telefónica", style: "display: block" %>
+        <%= form.text_field :requester_extension %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Número telefónico", style: "display: block" %>
+        <%= form.text_field :requester_phone %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Número de identificación", style: "display: block" %>
+        <%= form.text_field :requester_id %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Dirección de correo electrónico", style: "display: block" %>
+        <%= form.text_field :requester_mail %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Tipo de solicitante", style: "display: block" %>
+        <%= form.select :requester_type, options_for_select([])%>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Carnet de estudiante", style: "display: block" %>
+        <%= form.text_field :student_id %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Dependencia estudiantil", style: "display: block" %>
+        <%= form.select :student_assosiation, options_for_select([]) %>
+      </p>
+    </div>
+
   </div>
+  
+  <div id="work_information">
+    <div>
+      <p>
+        <%= form.label "Edificio", style: "display: block" %>
+        <%= form.select :work_building, options_for_select([])%>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Lugar", style: "display: block" %>
+        <%= form.text_field :work_location %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Tipo de trabajo", style: "display: block" %>
+        <%= form.select :work_type, options_for_select([]) %>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <%= form.label "Tipo de trabajo", style: "display: block" %>
+        <%= form.text_area :work_description %>
+      </p>
+    </div>
+  </div>
+  
 
   <div>
-    <%= form.label :requester_extension, style: "display: block" %>
-    <%= form.text_field :requester_extension %>
-  </div>
-
-  <div>
-    <%= form.label :requester_phone, style: "display: block" %>
-    <%= form.text_field :requester_phone %>
-  </div>
-
-  <div>
-    <%= form.label :requester_id, style: "display: block" %>
-    <%= form.text_field :requester_id %>
-  </div>
-
-  <div>
-    <%= form.label :requester_mail, style: "display: block" %>
-    <%= form.text_field :requester_mail %>
-  </div>
-
-  <div>
-    <%= form.label :requester_type, style: "display: block" %>
-    <%= form.text_field :requester_type %>
-  </div>
-
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
-  </div>
-
-  <div>
-    <%= form.label :student_assosiation, style: "display: block" %>
-    <%= form.text_field :student_assosiation %>
-  </div>
-
-  <div>
-    <%= form.label :work_location, style: "display: block" %>
-    <%= form.text_field :work_location %>
-  </div>
-
-  <div>
-    <%= form.label :work_building, style: "display: block" %>
-    <%= form.text_field :work_building %>
-  </div>
-
-  <div>
-    <%= form.label :work_type, style: "display: block" %>
-    <%= form.text_field :work_type %>
-  </div>
-
-  <div>
-    <%= form.label :work_description, style: "display: block" %>
-    <%= form.text_area :work_description %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit "Hacer solicitud" %>
   </div>
 <% end %>
