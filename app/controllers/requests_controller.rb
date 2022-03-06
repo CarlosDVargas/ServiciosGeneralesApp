@@ -15,10 +15,6 @@ class RequestsController < ApplicationController
     @request = Request.new
   end
 
-  # GET /requests/1/edit
-  def edit
-  end
-
   # POST /requests or /requests.json
   def create
     @request = Request.new(request_params)

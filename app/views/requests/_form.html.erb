@@ -51,7 +51,7 @@
     <div>
       <p>
         <%= form.label "Tipo de solicitante", style: "display: block" %>
-        <%= form.select :requester_type, options_for_select([])%>
+        <%= form.select :requester_type, options_for_select([["Estudiante", 'student'], ["Docente", 'teacher'], ["Administrativo", 'administrative']]) %>
       </p>
     </div>
 
@@ -65,17 +65,18 @@
     <div>
       <p>
         <%= form.label "Dependencia estudiantil", style: "display: block" %>
-        <%= form.select :student_assosiation, options_for_select([]) %>
+        <%= form.select :student_assosiation, options_for_select([["Asociación Estudiantil", 'student_assosiation'], ["FEUCR", 'feucr']]) %>
       </p>
     </div>
 
   </div>
   
   <div id="work_information">
+    <p>Información del trabajo a solicitud</p>
     <div>
       <p>
         <%= form.label "Edificio", style: "display: block" %>
-        <%= form.select :work_building, options_for_select([])%>
+        <%= form.select :work_building, options_for_select([["Gimnasio", 'gym'], ["Laboratorios de Ciencias Naturales", 'science_labs']])%>
       </p>
     </div>
 
@@ -89,7 +90,7 @@
     <div>
       <p>
         <%= form.label "Tipo de trabajo", style: "display: block" %>
-        <%= form.select :work_type, options_for_select([]) %>
+        <%= form.select :work_type, options_for_select([["Eléctrico", 'electrical'], ["Plomería", 'plumbing']]) %>
       </p>
     </div>
 

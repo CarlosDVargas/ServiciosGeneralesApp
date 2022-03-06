@@ -1,61 +1,63 @@
 <div id="<%= dom_id request %>">
   <p>
-    <strong>Requester name:</strong>
+    <strong>Nombre del solicitante:</strong>
     <%= request.requester_name %>
   </p>
 
   <p>
-    <strong>Requester extension:</strong>
+    <strong>Extensión del solicitante:</strong>
     <%= request.requester_extension %>
   </p>
 
   <p>
-    <strong>Requester phone:</strong>
+    <strong>Número telefónico de solicitante:</strong>
     <%= request.requester_phone %>
   </p>
 
   <p>
-    <strong>Requester:</strong>
+    <strong>Identificación del solicitante:</strong>
     <%= request.requester_id %>
   </p>
 
   <p>
-    <strong>Requester mail:</strong>
+    <strong>Dirección email del solicitante:</strong>
     <%= request.requester_mail %>
   </p>
 
   <p>
-    <strong>Requester type:</strong>
+    <strong>Tipo de solicitante:</strong>
     <%= request.requester_type %>
   </p>
 
+  <% if request.requester_type == 'student' %>
+    <p>
+      <strong>Carnet del solicitante:</strong>
+      <%= request.student_id %>
+    </p>
+
+    <p>
+      <strong>Dependencia estudiantil:</strong>
+      <%= request.student_assosiation %>
+    </p>
+  <% end %>
+  
   <p>
-    <strong>Student:</strong>
-    <%= request.student_id %>
+    <strong>Edificio:</strong>
+    <%= request.work_building %>
   </p>
 
-  <p>
-    <strong>Student assosiation:</strong>
-    <%= request.student_assosiation %>
-  </p>
-
-  <p>
-    <strong>Work location:</strong>
+   <p>
+    <strong>Lugar del trabajo a realizar:</strong>
     <%= request.work_location %>
   </p>
 
   <p>
-    <strong>Work building:</strong>
-    <%= request.work_building %>
-  </p>
-
-  <p>
-    <strong>Work type:</strong>
+    <strong>Tipo de trabajo a realizar:</strong>
     <%= request.work_type %>
   </p>
 
   <p>
-    <strong>Work description:</strong>
+    <strong>Descripción del trabajo a realizar:</strong>
     <%= request.work_description %>
   </p>
 
