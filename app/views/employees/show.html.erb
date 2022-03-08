@@ -5,6 +5,5 @@
 <div>
   <%= link_to "Editar empleado", edit_employee_path(@employee) %> |
   <%= link_to "Regresar a lista", employees_path %>
-
-  <%= button_to "Eliminar empleado", @employee, method: :delete %>
+  <%= link_to "Eliminar empleado", employees_deleteConfirm_path(@employee), class: 'btn btn-sm btn-danger' %>
 </div>

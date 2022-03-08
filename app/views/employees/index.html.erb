@@ -1,14 +1,39 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Employees</h1>
+<h1>Lista de empleados</h1>
 
 <div id="employees">
-  <% @employees.each do |employee| %>
-    <%= render employee %>
-    <p>
-      <%= link_to "Mostrar empleado", employee %>
-    </p>
-  <% end %>
+
+
+    <div class="row">
+      <div class="col-9">  
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Cédula</th>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @employees.each do |employee| %>
+              <tr>
+                <td><%= employee.idCard %></td>
+                <td><%= employee.fullName %></td>
+                <td><%= employee.status %></td>
+                <td><%= link_to 'Mostrar empleado', employee,
+                                              class: 'btn btn-sm btn-info' %> | 
+                    <%= link_to "Editar empleado", edit_employee_path(employee), class: 'btn btn-sm btn-success' %> | 
+                    <%= link_to 'Eliminar empleado', employee, method: :delete, data: {confirm: 'Are you sure?'},
+                                              class: 'btn btn-sm btn-danger' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
 </div>
 
 <%= link_to "Nuevo empleado", new_employee_path %>

@@ -1,0 +1,12 @@
+<h1>¿Está seguro que quiere eliminar el siguiente empleado?</h1>
+
+<p style="color: green"><%= notice %></p>
+
+<%= render @employee %>
+
+<div>
+  <%= link_to "Regresar a lista", employees_path %>
+
+  <%= button_to 'Eliminar empleado', @employee, method: :delete, data: {confirm: '¿Está seguro?'},
+                                              class: 'btn btn-sm btn-danger' %></td>
+</div>

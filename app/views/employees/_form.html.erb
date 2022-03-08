@@ -32,6 +32,6 @@
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit(employee.new_record? ? "Registrar" : "Actualizar", class: "btn btn-sm btn-success") %>
   </div>
 <% end %>
