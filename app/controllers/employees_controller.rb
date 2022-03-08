@@ -69,6 +69,7 @@ class EmployeesController < ApplicationController
 
     def set_employee_deleteConfirm
       @employee = Employee.find(params[:format])
+      
     end
 
     # Only allow a list of trusted parameters through.
