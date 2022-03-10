@@ -1,5 +1,7 @@
+require "./app/models/dictionary.rb"
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
+  before_action :set_dictionary, only: %i[new show edit update index]
 
   # GET /requests or /requests.json
   def index
@@ -57,6 +59,10 @@ class RequestsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_request
       @request = Request.find(params[:id])
+    end
+
+    def set_dictionary
+      @dictionary = Dictionary.new()
     end
 
     # Only allow a list of trusted parameters through.

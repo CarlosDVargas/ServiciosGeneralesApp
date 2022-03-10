@@ -51,7 +51,7 @@
     <div data-controller= "hello">
       <p>
         <%= form.label "Tipo de solicitante", style: "display: block" %>
-        <%= form.select :requester_type, options_for_select([["Estudiante", 'student'], ["Docente", 'teacher'], ["Administrativo", 'administrative']]), {}, data: { action: "change->hello#handleChange"} %>
+        <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each()), {}, data: { action: "change->hello#handleChange"} %>
       </p>
     </div>
 
@@ -67,7 +67,7 @@
       <div>
         <p>
           <%= form.label "Dependencia estudiantil", style: "display: block" %>
-          <%= form.select :student_assosiation, options_for_select([["Asociación Estudiantil", 'student_assosiation'], ["FEUCR", 'feucr']]) %>
+          <%= form.select :student_assosiation, options_for_select(@dictionary.studentAssociations.invert().each()) %>
         </p>
       </div>
     </div>
@@ -81,7 +81,7 @@
         <%= form.label "Edificio", style: "display: block" %>
         <div class="grid-container">
           <div class="grid-item">
-            <%= form.select :work_building, options_for_select([["Gimnasio", 'gym'], ["Laboratorios de Ciencias Naturales", 'science_labs'], ["Otro", 'other']])%>
+            <%= form.select :work_building, options_for_select(@dictionary.workBuildings.invert().each())%>
           </div>
           <div class="grid-item other-selected" id="work_building">
             <%= form.text_field :work_building %>
@@ -102,7 +102,7 @@
         <%= form.label "Tipo de trabajo", style: "display: block" %>
         <div class="grid-container">
           <div class="grid-item">
-            <%= form.select :work_type, options_for_select([["Eléctrico", 'electrical'], ["Plomería", 'plumbing'], ["Otro", 'other']]) %>
+            <%= form.select :work_type, options_for_select(@dictionary.workTypes.invert().each()) %>
           </div>
           <div class="grid-item other-selected" id="work_type">
             <%= form.text_field :work_type %>

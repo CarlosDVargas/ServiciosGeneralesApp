@@ -26,7 +26,7 @@
 
   <p>
     <strong>Tipo de solicitante:</strong>
-    <%= request.requester_type %>
+    <%= @dictionary.requesterTypes.key(request.requester_type) %>
   </p>
 
   <% if request.requester_type == 'student' %>
