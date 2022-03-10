@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div id="requester_information"> 
+  <div id="requester_information" class="form-group"> 
     <p>Información del solicitante</p>
     <div>
       <p>
@@ -48,35 +48,45 @@
       </p>
     </div>
 
-    <div>
+    <div data-controller= "hello">
       <p>
         <%= form.label "Tipo de solicitante", style: "display: block" %>
-        <%= form.select :requester_type, options_for_select([["Estudiante", 'student'], ["Docente", 'teacher'], ["Administrativo", 'administrative']]) %>
+        <%= form.select :requester_type, options_for_select([["Estudiante", 'student'], ["Docente", 'teacher'], ["Administrativo", 'administrative']]), {}, data: { action: "change->hello#handleChange"} %>
       </p>
     </div>
 
-    <div>
-      <p>
-        <%= form.label "Carnet de estudiante", style: "display: block" %>
-        <%= form.text_field :student_id %>
-      </p>
-    </div>
+    <div class= "student-info">
+      
+      <div>
+        <p>
+          <%= form.label "Carnet de estudiante", style: "display: block" %>
+          <%= form.text_field :student_id %>
+        </p>
+      </div>
 
-    <div>
-      <p>
-        <%= form.label "Dependencia estudiantil", style: "display: block" %>
-        <%= form.select :student_assosiation, options_for_select([["Asociación Estudiantil", 'student_assosiation'], ["FEUCR", 'feucr']]) %>
-      </p>
+      <div>
+        <p>
+          <%= form.label "Dependencia estudiantil", style: "display: block" %>
+          <%= form.select :student_assosiation, options_for_select([["Asociación Estudiantil", 'student_assosiation'], ["FEUCR", 'feucr']]) %>
+        </p>
+      </div>
     </div>
 
   </div>
   
-  <div id="work_information">
+  <div id="work_information" class="form-group">
     <p>Información del trabajo a solicitud</p>
     <div>
       <p>
         <%= form.label "Edificio", style: "display: block" %>
-        <%= form.select :work_building, options_for_select([["Gimnasio", 'gym'], ["Laboratorios de Ciencias Naturales", 'science_labs']])%>
+        <div class="grid-container">
+          <div class="grid-item">
+            <%= form.select :work_building, options_for_select([["Gimnasio", 'gym'], ["Laboratorios de Ciencias Naturales", 'science_labs'], ["Otro", 'other']])%>
+          </div>
+          <div class="grid-item other-selected" id="work_building">
+            <%= form.text_field :work_building %>
+          </div>
+        </div>
       </p>
     </div>
 
@@ -90,7 +100,15 @@
     <div>
       <p>
         <%= form.label "Tipo de trabajo", style: "display: block" %>
-        <%= form.select :work_type, options_for_select([["Eléctrico", 'electrical'], ["Plomería", 'plumbing']]) %>
+        <div class="grid-container">
+          <div class="grid-item">
+            <%= form.select :work_type, options_for_select([["Eléctrico", 'electrical'], ["Plomería", 'plumbing'], ["Otro", 'other']]) %>
+          </div>
+          <div class="grid-item other-selected" id="work_type">
+            <%= form.text_field :work_type %>
+          </div>
+          </div>
+        
       </p>
     </div>
 
