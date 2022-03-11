@@ -5,7 +5,17 @@ class RequestsController < ApplicationController
 
   # GET /requests or /requests.json
   def index
-    @requests = Request.all
+    status = params[:staus]
+    case status
+    when 'in_progress'
+      @requests = Request.where(status: "in_progress")
+    when 'completed'
+      @requests = Request.where(status: "completed")
+    when 'rejected'
+      @requests = Request.where(status: "rejected")
+    else
+      @requests = Request.where(status: "pending")
+    end
   end
 
   # GET /requests/1 or /requests/1.json

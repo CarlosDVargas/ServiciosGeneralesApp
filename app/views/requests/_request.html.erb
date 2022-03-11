@@ -26,7 +26,7 @@
 
   <p>
     <strong>Tipo de solicitante:</strong>
-    <%= @dictionary.requesterTypes.key(request.requester_type) %>
+    <%= @dictionary.requesterTypes[request.requester_type.to_sym] %>
   </p>
 
   <% if request.requester_type == 'student' %>
@@ -37,13 +37,13 @@
 
     <p>
       <strong>Dependencia estudiantil:</strong>
-      <%= request.student_assosiation %>
+      <%= @dictionary.studentAssociations[request.student_assosiation.to_sym] %>
     </p>
   <% end %>
   
   <p>
     <strong>Edificio:</strong>
-    <%= request.work_building %>
+    <%= @dictionary.workBuildings[request.work_building.to_sym] %>
   </p>
 
    <p>
@@ -53,7 +53,7 @@
 
   <p>
     <strong>Tipo de trabajo a realizar:</strong>
-    <%= request.work_type %>
+    <%= @dictionary.workTypes[request.work_type.to_sym] %>
   </p>
 
   <p>

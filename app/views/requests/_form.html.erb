@@ -48,10 +48,10 @@
       </p>
     </div>
 
-    <div data-controller= "hello">
+    <div>
       <p>
         <%= form.label "Tipo de solicitante", style: "display: block" %>
-        <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each()), {}, data: { action: "change->hello#handleChange"} %>
+        <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each())%>
       </p>
     </div>
 
