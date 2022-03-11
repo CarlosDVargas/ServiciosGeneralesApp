@@ -84,7 +84,7 @@
             <%= form.select :work_building, options_for_select(@dictionary.workBuildings.invert().each())%>
           </div>
           <div class="grid-item other-selected" id="work_building">
-            <%= form.text_field :work_building %>
+            <%= form.text_field :work_building, id:"work-building-field" %>
           </div>
         </div>
       </p>
@@ -105,7 +105,7 @@
             <%= form.select :work_type, options_for_select(@dictionary.workTypes.invert().each()) %>
           </div>
           <div class="grid-item other-selected" id="work_type">
-            <%= form.text_field :work_type %>
+            <%= form.text_field :work_type, id: "work-type-field" %>
           </div>
           </div>
         

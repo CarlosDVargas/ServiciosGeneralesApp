@@ -1,21 +1,11 @@
 require "./app/models/dictionary.rb"
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
-  before_action :set_dictionary, only: %i[new show edit update index]
+  before_action :set_dictionary, only: %i[new show edit update index create]
 
   # GET /requests or /requests.json
   def index
-    status = params[:staus]
-    case status
-    when 'in_progress'
-      @requests = Request.where(status: "in_progress")
-    when 'completed'
-      @requests = Request.where(status: "completed")
-    when 'rejected'
-      @requests = Request.where(status: "rejected")
-    else
-      @requests = Request.where(status: "pending")
-    end
+     @requests = Request.all
   end
 
   # GET /requests/1 or /requests/1.json
