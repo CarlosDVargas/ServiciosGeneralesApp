@@ -21,11 +21,15 @@
  }
 
  .table {
-     margin: 10px;
+     margin: 30px;
      padding: auto;
      text-align: center;
  }
 
+ .request-table {
+     margin: 20px;
+     width: max-content;
+ }
  .action-button {
      background-color: inherit;
      float: left;

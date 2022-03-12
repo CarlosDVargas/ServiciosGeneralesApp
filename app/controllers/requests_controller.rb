@@ -8,7 +8,7 @@ class RequestsController < ApplicationController
   def index
     case @status
     when 'in_process'
-      @requests = Request.where(status: "in_progress")
+      @requests = Request.where(status: "in_process")
     when 'completed'
       @requests = Request.where(status: "completed")
     when 'closed'
@@ -68,20 +68,23 @@ class RequestsController < ApplicationController
   end
 
   def change_status
-    puts "Changing status"
-    case request.status
+    status = @request.status
+    case status
     when 'in_process'
-      request.update_attribute(status: 'pending')
+      @request.update(status: 'pending')
+      reload_index()
     when 'completed'
-      request.update_attribute(status: 'closed')
+      @request.update(status: 'closed')
+      reload_index()
     when 'closed'
-      request.update_attribute(status: 'in_progress')
+      @request.update(status: 'in_process')
+      reload_index()
     when 'denied'
       
     else
-      request.update_attribute(status: 'in_process')
+      @request.update(status: 'in_process')
+      reload_index()
     end
-    render @requests
   end
 
   private
@@ -97,6 +100,10 @@ class RequestsController < ApplicationController
 
     def set_status
       @status = params[:status]
+    end
+
+    def reload_index()
+      redirect_to requests_path, notice: "Se actualizó el estado de la solicitud"
     end
 
     # Only allow a list of trusted parameters through.
