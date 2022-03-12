@@ -73,6 +73,7 @@ GEM
     bootsnap (1.10.3)
       msgpack (~> 1.2)
     builder (3.2.4)
+    byebug (9.1.0)
     capybara (3.36.0)
       addressable
       matrix
@@ -223,6 +224,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
+  byebug (~> 9.0, >= 9.0.6)
   capybara
   cssbundling-rails
   debug
