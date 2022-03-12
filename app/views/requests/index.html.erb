@@ -1,10 +1,16 @@
 <%= render 'index_navigation'%>
 <p style="color: green"><%= notice %></p>
 
+<% case @status 
+   when 'pending' %> <h1>Solicitudes Pendientes</h1>
+<% when 'in_process' %> <h1>Solicitudes en Proceso</h1>
+<% when 'completed' %> <h1>Solicitudes Finalizadas</h1>
+<% when 'closed' %> <h1>Solicitudes Cerradas</h1>
+<% when 'denied' %> <h1>Solicitudes Rechazadas</h1>
+<% end %>
 
-<h1>Requests</h1>
 
-<div id="requests">
+<div id="requests" class="request-table">
   <table class= "table table-striped table-bordered">
     <tr>
       <th class= "table-header">Consecutivo</th>
@@ -22,7 +28,17 @@
       <td><%= request.work_location %></td>
       <td><%= request.requester_name %></td>
       <td class= "actions-col">
-        <%= link_to "Show this request", request %>
+        <div class="grid-container">
+          <div class="grid-item">
+            <%= link_to "Ver solicitud", request, class: "action-button" %>
+          </div>
+          <div class="grid-item"> 
+            <%= link_to "Atender", request, class: "action-button" %>
+          </div>
+          <div class="grid-item">
+            <%= link_to "Rechazar", request, class: "action-button" %>
+          </div>
+        </div>
       </td>
     </tr>
     <% end %>

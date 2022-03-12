@@ -12,7 +12,7 @@
      border: none;
      outline: none;
      cursor: pointer;
-     padding: 14px 16px;
+     padding: 8px 10px;
      transition: 0.3s;
      border: 1px solid #ccc;
      border-radius: 10px 25px 5px 5px;
@@ -28,6 +28,7 @@
      background-color: #ccc;
  }
 
+ /* Eliminate the decoration of the link element and color to the text*/
  .tablinks {
     text-decoration: none;
     color: rgb(117, 117, 117);

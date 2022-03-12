@@ -2,11 +2,11 @@ require "./app/models/dictionary.rb"
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
   before_action :set_dictionary, only: %i[new show edit update index create]
+  before_action :set_status, only: %i[index show]
 
   # GET /requests or /requests.json
   def index
-    @status = params[:status]
-    case status
+    case @status
     when 'in_process'
       @requests = Request.where(status: "in_progress")
     when 'completed'
@@ -73,9 +73,13 @@ class RequestsController < ApplicationController
       @request = Request.find(params[:id])
     end
 
-    #
+    # Initialises the dictionary with the default values
     def set_dictionary
       @dictionary = Dictionary.new()
+    end
+
+    def set_status
+      @status = params[:status]
     end
 
     # Only allow a list of trusted parameters through.
