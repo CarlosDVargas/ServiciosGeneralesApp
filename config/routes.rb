@@ -9,5 +9,9 @@ Rails.application.routes.draw do
   root 'pages#home'
   resources :users
   #The route for editing the requests is disabled for now
-  resources :requests, except: [:edit]
+  resources :requests, except: [:edit] do
+    member do
+      get :change_status
+    end
+  end
 end

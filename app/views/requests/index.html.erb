@@ -33,7 +33,8 @@
             <%= link_to "Ver solicitud", request, class: "action-button" %>
           </div>
           <div class="grid-item"> 
-            <%= link_to "Atender", request, class: "action-button" %>
+            <%= request.status %>
+            <%= link_to "Atender", change_status_request_path(request), class: "action-button" %>
           </div>
           <div class="grid-item">
             <%= link_to "Rechazar", request, class: "action-button" %>

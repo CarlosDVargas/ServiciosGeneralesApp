@@ -1,6 +1,6 @@
 require "./app/models/dictionary.rb"
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show edit update destroy ]
+  before_action :set_request, only: %i[ show edit update destroy change_status]
   before_action :set_dictionary, only: %i[new show edit update index create]
   before_action :set_status, only: %i[index show]
 
@@ -65,6 +65,23 @@ class RequestsController < ApplicationController
       format.html { redirect_to requests_url, notice: "Request was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def change_status
+    puts "Changing status"
+    case request.status
+    when 'in_process'
+      request.update_attribute(status: 'pending')
+    when 'completed'
+      request.update_attribute(status: 'closed')
+    when 'closed'
+      request.update_attribute(status: 'in_progress')
+    when 'denied'
+      
+    else
+      request.update_attribute(status: 'in_process')
+    end
+    render @requests
   end
 
   private
