@@ -1,15 +1,32 @@
 <%= render 'index_navigation'%>
 <p style="color: green"><%= notice %></p>
 
+
 <h1>Requests</h1>
 
 <div id="requests">
-  <% @requests.each do |request| %>
-    <%= render request %>
-    <p>
-      <%= link_to "Show this request", request %>
-    </p>
-  <% end %>
+  <table class= "table table-striped table-bordered">
+    <tr>
+      <th class= "table-header">Consecutivo</th>
+      <th class= "table-header">Fecha solicitud</th>
+      <th class= "table-header">Edificio</th>
+      <th class= "table-header">Sitio</th>
+      <th class= "table-header">Solicitante</th>
+      <th class= "table-header">Acciones</th>
+    </tr>
+    <% @requests.each do |request| %>
+    <tr>
+      <td><%= request.id %></td>
+      <td><%= request.created_at.strftime("%d/%m/%Y") %></td>
+      <td><%= @dictionary.workBuildings[request.work_building.to_sym] %></td>
+      <td><%= request.work_location %></td>
+      <td><%= request.requester_name %></td>
+      <td class= "actions-col">
+        <%= link_to "Show this request", request %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
 </div>
 
 <%= link_to "New request", new_request_path %>

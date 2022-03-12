@@ -5,7 +5,7 @@ class RequestsController < ApplicationController
 
   # GET /requests or /requests.json
   def index
-     status = params[:status]
+    @status = params[:status]
     case status
     when 'in_process'
       @requests = Request.where(status: "in_progress")
@@ -13,8 +13,8 @@ class RequestsController < ApplicationController
       @requests = Request.where(status: "completed")
     when 'closed'
       @requests = Request.where(status: "closed")
-    when 'rejected'
-      @requests = Request.where(status: "rejected")
+    when 'denied'
+      @requests = Request.where(status: "denied")
     else
       @requests = Request.where(status: "pending")
     end
@@ -73,12 +73,13 @@ class RequestsController < ApplicationController
       @request = Request.find(params[:id])
     end
 
+    #
     def set_dictionary
       @dictionary = Dictionary.new()
     end
 
     # Only allow a list of trusted parameters through.
     def request_params
-      #params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description)
+      params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description)
     end
 end
