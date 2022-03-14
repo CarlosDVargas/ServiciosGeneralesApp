@@ -14,4 +14,10 @@ Rails.application.routes.draw do
       get :change_status
     end
   end
+  
+  resources :employees do
+    collection do
+      get :statusfilter
+    end
+  end
 end

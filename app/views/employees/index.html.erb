@@ -1,6 +1,20 @@
+<%= form_tag employees_path, method: :get do %>
+  <%= check_box_tag "active", true %> Activos
+  <%= check_box_tag "inactive", true %> Inactivos
+  <%= submit_tag "Filtrar", :name => 'statusfilter' %>
+  <div>
+</div>
+<% end %>
+
+
 <p style="color: green"><%= notice %></p>
 
-<h1>Lista de empleados</h1>
+<% case @status 
+   when 'active' %> <h1>Trabajadores activos</h1>
+<% when 'inactive' %> <h1>Trabajadores inactivos</h1>
+<% else %> <h1>Lista de trabajadores</h1>
+<% end %>
+
 
 <div id="employees">
 

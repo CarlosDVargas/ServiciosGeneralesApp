@@ -1,10 +1,52 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
   before_action :set_employee_deleteConfirm, only: %i[ deleteConfirm ]
+  before_action :set_status, only: %i[index show]
 
   # GET /employees or /employees.json
   def index
-    @employees = Employee.all
+    if params[:active] && params[:inactive]
+      @status = nil
+      @employees = Employee.all
+    elsif params[:active]
+      @status = "active"
+      @employees = Employee.where(status: true)
+    elsif params[:inactive]
+      @status = "inactive"
+      @employees = Employee.where(status: false)
+    else
+      @status = nil
+      @employees = Employee.all
+    end
+
+    #Nota, código de abajo guardado para usar después para posible optimización
+
+    # method = params[:commit]
+    # if method == "Filtrar"
+    #   if params[:active] && params[:inactive]
+    #     @status = nil
+    #     @employees = Employee.all
+    #   elsif params[:active]
+    #     @status = "active"
+    #     @employees = Employee.where(status: true)
+    #   elsif params[:inactive]
+    #     @status = "inactive"
+    #     @employees = Employee.where(status: false)
+    #   else
+    #     @status = nil
+    #     @employees = Employee.all
+    #   end
+    # else
+    #   @employees = Employee.all
+    # end
+    #case @status
+    #when 'active'
+    #  @employees = Employee.where(status: true)
+    #when 'inactive'
+    #  @employees = Employee.where(status: false)
+    #else
+    #  @employees = Employee.all
+    #end
   end
 
   # GET /employees/1 or /employees/1.json
@@ -61,6 +103,10 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def statusfilter
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
@@ -75,5 +121,9 @@ class EmployeesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def employee_params
       params.require(:employee).permit(:idCard, :fullName, :email, :status)
+    end
+
+    def set_status
+      @status = params[:status]
     end
 end
