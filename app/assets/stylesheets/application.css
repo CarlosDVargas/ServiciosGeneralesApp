@@ -18,8 +18,13 @@
      display: grid;
      column-gap: auto;
      grid-template-columns: auto auto auto;
+     text-align: center;
  }
 
+ .display-group{
+     margin: 20px;
+     padding: 10px;
+ }
  .table {
      margin: 30px;
      padding: auto;
@@ -41,7 +46,7 @@
      border: 1px solid #ccc;
      border-radius: 10px;
      text-decoration: none;
-     color: rgb(117, 117, 117);
+     color: rgb(134, 132, 132);
      margin: 5px;
      text-align: center;
  }
