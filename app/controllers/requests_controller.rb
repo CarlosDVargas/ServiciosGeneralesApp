@@ -46,14 +46,11 @@ class RequestsController < ApplicationController
 
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
+    byebug
     respond_to do |format|
-      if @request.update(request_params)
-        format.html { redirect_to request_url(@request), notice: "Request was successfully updated." }
-        format.json { render :show, status: :ok, location: @request }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
-      end
+
+      deny_reasons = request_params[:deny_reasons_attributes]
+      
     end
   end
 
@@ -108,6 +105,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description)
+      params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons_attributes: [ :_destroy, :description, :request_id, :user_id])
     end
 end

@@ -12,4 +12,9 @@ class Request < ApplicationRecord
   validates :work_location, presence: true
   validates :work_type, presence: true
   validates :work_description, presence: true
+
+  has_many :deny_reasons, dependent: :destroy
+  accepts_nested_attributes_for :deny_reasons, allow_destroy: true,  reject_if: proc { |attr| attr['description'].blank? }
+
+
 end

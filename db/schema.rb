@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_06_185904) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_13_053852) do
+  create_table "deny_reasons", force: :cascade do |t|
+    t.string "description"
+    t.integer "user_id", null: false
+    t.integer "request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_deny_reasons_on_request_id"
+    t.index ["user_id"], name: "index_deny_reasons_on_user_id"
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string "idCard"
     t.string "fullName"
@@ -47,4 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_185904) do
     t.string "password_digest"
   end
 
+  add_foreign_key "deny_reasons", "requests"
+  add_foreign_key "deny_reasons", "users"
 end

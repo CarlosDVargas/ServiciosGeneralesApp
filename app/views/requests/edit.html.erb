@@ -1,10 +1,17 @@
-<h1>Editing request</h1>
+<div class="form-group"> 
+  <h3>Rechazar Solicitud:</h3>
+  <h5>Número de solicitud: <%= @request.id %></h4>
+</div>
 
-<%= render "form", request: @request %>
+<div class="form-group">
+  <%= render @request %>
+</div>
 
-<br>
+<div class="form-group">
+    <%= render "deny_request", request: @request %>
+</div>
 
-<div>
+<div class="form-group">
   <%= link_to "Show this request", @request %> |
   <%= link_to "Back to requests", requests_path %>
 </div>

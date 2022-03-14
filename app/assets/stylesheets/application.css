@@ -55,3 +55,7 @@
  .action-button.active {
      background-color: #ccc;
  }
+
+ .hidden {
+     display: none;
+ }

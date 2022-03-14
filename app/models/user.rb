@@ -10,5 +10,8 @@ class User <ApplicationRecord
                     length: { maximum: 75 },
                     format: { with: VALID_EMAIL_REGEX }
   
-  has_secure_password 
+  has_secure_password
+
+  has_many :deny_reasons
+  accepts_nested_attributes_for :deny_reasons, reject_if: all.blank?, allow_destroy: true
 end

@@ -1,0 +1,24 @@
+<%= form_with(model: request, local: true) do |f| %>
+    <div data-controller="nested-form">
+        <h4>Razones para rechazar:</h4>
+
+        <template data-nested-form-target="template"> 
+            <%= f.fields_for :deny_reasons, DenyReason.new, child_index: "TEMPLATE_RECORD"  do |reason| %>
+                <%= render 'deny_reason_fields', f: reason, request: request %>
+            <% end %>
+        </template>
+        
+        <%= f.fields_for :deny_reasons  do |reason| %>
+                <%= render 'deny_reason_fields', f: reason, request: request %>
+        <% end %>
+
+        <div data-nested-form-target="add_item">
+            <%= link_to 'Agregar razón', "#", data: { action: 'nested-form#add_association'} %>
+        </div>
+    </div>
+    
+
+    <%= f.submit "Rechazar solicitud" %>
+
+
+<% end %>
