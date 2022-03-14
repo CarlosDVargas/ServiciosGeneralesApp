@@ -46,11 +46,19 @@ class RequestsController < ApplicationController
 
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
-    byebug
     respond_to do |format|
+      reasons_array = deny_reasons
+      if reasons_array
+        reasons_array.each {|reason|
+        DenyReason.create(description: reason[:description], user: User.first, request: @request)}
+        @request.update(status: 'denied')
+        format.html { redirect_to requests_url , notice: "Se actualizó el estado de la solicitud" }
+        format.json { head :no_content }
 
-      deny_reasons = request_params[:deny_reasons_attributes]
-      
+      else
+        format.html { render :edit }
+        format.json { render json: @request.errors }
+      end
     end
   end
 
@@ -90,6 +98,12 @@ class RequestsController < ApplicationController
       @request = Request.find(params[:id])
     end
 
+    def deny_reasons
+      if params[:request]
+        params[:request][:deny_reasons_attributes].values
+      end
+    end
+
     # Initialises the dictionary with the default values
     def set_dictionary
       @dictionary = Dictionary.new()
@@ -105,6 +119,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons_attributes: [ :_destroy, :description, :request_id, :user_id])
+      params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
     end
 end
