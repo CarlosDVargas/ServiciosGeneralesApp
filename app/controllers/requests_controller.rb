@@ -97,6 +97,8 @@ class RequestsController < ApplicationController
     @tempRequests = []
     @filter = ""
 
+    #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
+
     if params[:rejected]
       @filter += "0"
       @requests += Request.where(status: "denied")
@@ -123,7 +125,6 @@ class RequestsController < ApplicationController
     end
 
 
-    
     if params[:request_year]
       @year = params[:request_year].values[0]
       @month = params[:request_year].values[1]
@@ -140,6 +141,9 @@ class RequestsController < ApplicationController
       end
     end
 
+  end
+
+  def feedback
   end
 
   private
