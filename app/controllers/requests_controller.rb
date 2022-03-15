@@ -1,7 +1,7 @@
 require "./app/models/dictionary.rb"
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy change_status]
-  before_action :set_dictionary, only: %i[new show edit update index create]
+  before_action :set_dictionary, only: %i[new show edit update index create reports]
   before_action :set_status, only: %i[index show]
 
   # GET /requests or /requests.json
@@ -92,6 +92,56 @@ class RequestsController < ApplicationController
     end
   end
 
+  def reports
+    @requests = []
+    @tempRequests = []
+    @filter = ""
+
+    if params[:rejected]
+      @filter += "0"
+      @requests += Request.where(status: "denied")
+    end
+
+    if params[:pending]
+      @filter += "1"
+      @requests += Request.where(status: "pending")
+    end
+
+    if params[:finished]
+      @filter += "2"
+      @requests += Request.where(status: "closed")
+    end
+
+    if params[:outsourcing]
+      @filter += "3"
+      #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
+      #@requests += Request.where(status: "closed")
+    end
+
+    if @filter == ""
+      @requests = Request.all
+    end
+
+
+    
+    if params[:request_year]
+      @year = params[:request_year].values[0]
+      @month = params[:request_year].values[1]
+      @day = params[:request_year].values[2]
+
+      if @year != "" || @month != "" || @day != ""
+        (@requests).each do |rqt|
+          if validateDate(@year.to_i, rqt.created_at.year) && validateDate(@month.to_i, rqt.created_at.month) && validateDate(@day.to_i, rqt.created_at.day)
+            @tempRequests.push(rqt)
+          end
+        end
+        @requests = @tempRequests
+        @filter += "4"
+      end
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_request
@@ -120,5 +170,9 @@ class RequestsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def request_params
       params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
+    end
+
+    def validateDate(datePartReaded, datePartDataBase)
+      return datePartReaded == 0 || datePartReaded == datePartDataBase
     end
 end

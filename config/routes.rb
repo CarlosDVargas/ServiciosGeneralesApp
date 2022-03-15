@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   root 'pages#home'
   resources :users
   #The route for editing the requests is disabled for now
+
+  get '/requests/reports', to: 'requests#reports'
+
   resources :requests do
     member do
       get :change_status
