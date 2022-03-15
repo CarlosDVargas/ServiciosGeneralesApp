@@ -6,7 +6,7 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     if params[:active] && params[:inactive]
-      @status = nil
+      @status = "both"
       @employees = Employee.all
     elsif params[:active]
       @status = "active"

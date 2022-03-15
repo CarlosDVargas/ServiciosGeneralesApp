@@ -1,8 +1,12 @@
-<%= form_tag employees_path, method: :get do %>
-  <%= check_box_tag "active", true %> Activos
-  <%= check_box_tag "inactive", true %> Inactivos
-  <%= submit_tag "Filtrar", :name => 'statusfilter' %>
-<% end %>
+<div class="form-group"> 
+  <%= form_tag employees_path, method: :get do %>
+
+    <%= check_box_tag "active", "active", @status == "both" || @status == "active" %> Activos
+    <%= check_box_tag "inactive", "inactive", @status == "both" || @status == "inactive" %> Inactivos
+    <br>
+    <%= submit_tag "Filtrar", :name => 'statusfilter' %>
+  <% end %>
+</div>
 
 
 <p style="color: green"><%= notice %></p>
@@ -33,11 +37,11 @@
               <tr>
                 <td><%= employee.idCard %></td>
                 <td><%= employee.fullName %></td>
-                <td><%= employee.status %></td>
+                <td><%= employee.status ? "Activo" : "Inactivo" %></td>
                 <td><%= link_to 'Mostrar empleado', employee,
                                               class: 'btn btn-sm btn-info' %> | 
                     <%= link_to "Editar empleado", edit_employee_path(employee), class: 'btn btn-sm btn-success' %> | 
-                    <%= link_to 'Eliminar empleado', employee, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'},
+                    <%= link_to 'Eliminar empleado', employee, data: { turbo_method: :delete, turbo_confirm: '¿Eliminar este registro?'},
                                               class: 'btn btn-sm btn-danger' %></td>
               </tr>
             <% end %>
