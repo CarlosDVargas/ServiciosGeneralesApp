@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :feedbacks
   get '/employees/deleteConfirm', to: 'employees#deleteConfirm'
   resources :employees
   
