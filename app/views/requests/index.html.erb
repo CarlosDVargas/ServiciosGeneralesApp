@@ -1,11 +1,11 @@
-<%= render 'index_navigation'%>
+<%= render "index_navigation" %>
 <p style="color: green"><%= notice %></p>
 
-<% case @status 
-   when 'in_process' %> <h1>Solicitudes en Proceso</h1>
-<% when 'completed' %> <h1>Solicitudes Finalizadas</h1>
-<% when 'closed' %> <h1>Solicitudes Cerradas</h1>
-<% when 'denied' %> <h1>Solicitudes Rechazadas</h1>
+<% case @status
+   when "in_process" %> <h1>Solicitudes en Proceso</h1>
+<% when "completed" %> <h1>Solicitudes Finalizadas</h1>
+<% when "closed" %> <h1>Solicitudes Cerradas</h1>
+<% when "denied" %> <h1>Solicitudes Rechazadas</h1>
 <% else %> <h1>Solicitudes Pendientes</h1>
 <% end %>
 
@@ -32,7 +32,7 @@
           <div class="grid-item">
             <%= link_to "Ver solicitud", request, class: "action-button" %>
           </div>
-          <% if request.status == "pending"%>
+          <% if request.status == "pending" %>
             <div class="grid-item"> 
               <%= link_to "Atender", change_status_request_path(request), class: "action-button" %>
             </div>

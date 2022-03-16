@@ -1,19 +1,20 @@
 require "./app/models/dictionary.rb"
+
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show edit update destroy change_status]
+  before_action :set_request, only: %i[ show edit update destroy change_status ]
   before_action :set_dictionary, only: %i[new show edit update index create reports]
   before_action :set_status, only: %i[index show]
 
   # GET /requests or /requests.json
   def index
     case @status
-    when 'in_process'
+    when "in_process"
       @requests = Request.where(status: "in_process")
-    when 'completed'
+    when "completed"
       @requests = Request.where(status: "completed")
-    when 'closed'
+    when "closed"
       @requests = Request.where(status: "closed")
-    when 'denied'
+    when "denied"
       @requests = Request.where(status: "denied")
     else
       @requests = Request.where(status: "pending")
@@ -49,12 +50,12 @@ class RequestsController < ApplicationController
     respond_to do |format|
       reasons_array = deny_reasons
       if reasons_array
-        reasons_array.each {|reason|
-        DenyReason.create(description: reason[:description], user: User.first, request: @request)}
-        @request.update(status: 'denied')
-        format.html { redirect_to requests_url , notice: "Se actualizó el estado de la solicitud" }
+        reasons_array.each { |reason|
+          DenyReason.create(description: reason[:description], user: User.first, request: @request)
+        }
+        @request.update(status: "denied")
+        format.html { redirect_to requests_url, notice: "Se actualizó el estado de la solicitud" }
         format.json { head :no_content }
-
       else
         format.html { render :edit }
         format.json { render json: @request.errors }
@@ -75,19 +76,18 @@ class RequestsController < ApplicationController
   def change_status
     status = @request.status
     case status
-    when 'in_process'
-      @request.update(status: 'pending')
+    when "in_process"
+      @request.update(status: "pending")
       reload_index()
-    when 'completed'
-      @request.update(status: 'closed')
+    when "completed"
+      @request.update(status: "closed")
       reload_index()
-    when 'closed'
-      @request.update(status: 'in_process')
+    when "closed"
+      @request.update(status: "in_process")
       reload_index()
-    when 'denied'
-      
+    when "denied"
     else
-      @request.update(status: 'in_process')
+      @request.update(status: "in_process")
       reload_index()
     end
   end
@@ -122,8 +122,6 @@ class RequestsController < ApplicationController
       @requests = Request.all
     end
 
-
-    
     if params[:request_year]
       @year = params[:request_year].values[0]
       @month = params[:request_year].values[1]
@@ -139,40 +137,40 @@ class RequestsController < ApplicationController
         @filter += "4"
       end
     end
-
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_request
-      @request = Request.find(params[:id])
-    end
 
-    def deny_reasons
-      if params[:request]
-        params[:request][:deny_reasons_attributes].values
-      end
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_request
+    @request = Request.find(params[:id])
+  end
 
-    # Initialises the dictionary with the default values
-    def set_dictionary
-      @dictionary = Dictionary.new()
+  def deny_reasons
+    if params[:request]
+      params[:request][:deny_reasons_attributes].values
     end
+  end
 
-    def set_status
-      @status = params[:status]
-    end
+  # Initialises the dictionary with the default values
+  def set_dictionary
+    @dictionary = Dictionary.new()
+  end
 
-    def reload_index()
-      redirect_to requests_path, notice: "Se actualizó el estado de la solicitud"
-    end
+  def set_status
+    @status = params[:status]
+  end
 
-    # Only allow a list of trusted parameters through.
-    def request_params
-      params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
-    end
+  def reload_index()
+    redirect_to requests_path, notice: "Se actualizó el estado de la solicitud"
+  end
 
-    def validateDate(datePartReaded, datePartDataBase)
-      return datePartReaded == 0 || datePartReaded == datePartDataBase
-    end
+  # Only allow a list of trusted parameters through.
+  def request_params
+    params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
+  end
+
+  def validateDate(datePartReaded, datePartDataBase)
+    return datePartReaded == 0 || datePartReaded == datePartDataBase
+  end
 end

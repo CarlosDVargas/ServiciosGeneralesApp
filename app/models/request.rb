@@ -6,7 +6,7 @@ class Request < ApplicationRecord
   validates :requester_phone, presence: true
   validates :requester_id, presence: true
   validates :requester_mail, presence: true,
-            format: { with: VALID_EMAIL_REGEX }
+                             format: { with: VALID_EMAIL_REGEX }
   validates :requester_type, presence: true
   validates :work_building, presence: true
   validates :work_location, presence: true
@@ -14,7 +14,7 @@ class Request < ApplicationRecord
   validates :work_description, presence: true
 
   has_many :deny_reasons, dependent: :destroy
-  accepts_nested_attributes_for :deny_reasons, allow_destroy: true,  reject_if: proc { |attr| attr['description'].blank? }
+  accepts_nested_attributes_for :deny_reasons, allow_destroy: true, reject_if: proc { |attr| attr["description"].blank? }
 
   has_many :tasks
   has_many :employees, through: :tasks

@@ -104,26 +104,25 @@ class EmployeesController < ApplicationController
   end
 
   def statusfilter
-
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee
-      @employee = Employee.find(params[:id])
-    end
 
-    def set_employee_deleteConfirm
-      @employee = Employee.find(params[:format])
-      
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def employee_params
-      params.require(:employee).permit(:idCard, :fullName, :email, :status)
-    end
+  def set_employee_deleteConfirm
+    @employee = Employee.find(params[:format])
+  end
 
-    def set_status
-      @status = params[:status]
-    end
+  # Only allow a list of trusted parameters through.
+  def employee_params
+    params.require(:employee).permit(:idCard, :fullName, :email, :status)
+  end
+
+  def set_status
+    @status = params[:status]
+  end
 end

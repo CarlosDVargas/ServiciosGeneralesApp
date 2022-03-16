@@ -52,7 +52,7 @@
       <div>
         <p>
           <%= form.label "Tipo de solicitante", style: "display: block" %>
-          <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each()), {}, data: {select_target: "select", action: "select#select"} %>
+          <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each()), {}, data: { select_target: "select", action: "select#select" } %>
         </p>
       </div>
 
@@ -73,7 +73,6 @@
         </div>
       </div>
     </div>
-    
 
   </div>
   
@@ -84,10 +83,10 @@
         <%= form.label "Edificio", style: "display: block" %>
         <div class="grid-container">
           <div class="grid-item">
-            <%= form.select :work_building, options_for_select(@dictionary.workBuildings.invert().each()), {}, data: {select_target: "select", action: "select#select"} %>
+            <%= form.select :work_building, options_for_select(@dictionary.workBuildings.invert().each()), {}, data: { select_target: "select", action: "select#select" } %>
           </div>
           <div class="grid-item" id="work_building" data-select-target="hidden">
-            <%= form.text_field :work_building, id:"work-building-field", data: { select_target: "field" } %>
+            <%= form.text_field :work_building, id: "work-building-field", data: { select_target: "field" } %>
           </div>
         </div>
       </p>
@@ -105,7 +104,7 @@
         <%= form.label "Tipo de trabajo", style: "display: block" %>
         <div class="grid-container">
           <div class="grid-item">
-            <%= form.select :work_type, options_for_select(@dictionary.workTypes.invert().each()), {}, data: {select_target: "select", action: "select#select"} %>
+            <%= form.select :work_type, options_for_select(@dictionary.workTypes.invert().each()), {}, data: { select_target: "select", action: "select#select" } %>
           </div>
           <div class="grid-item" id="work_type" data-select-target="hidden">
             <%= form.text_field :work_type, id: "work-type-field", data: { select_target: "field" } %>
