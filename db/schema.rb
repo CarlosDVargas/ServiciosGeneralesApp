@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_13_053852) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_16_043045) do
   create_table "deny_reasons", force: :cascade do |t|
     t.string "description"
     t.integer "user_id", null: false
@@ -48,6 +48,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_13_053852) do
     t.string "status", default: "pending"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.integer "employee_id", null: false
+    t.integer "request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_tasks_on_employee_id"
+    t.index ["request_id"], name: "index_tasks_on_request_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -59,4 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_13_053852) do
 
   add_foreign_key "deny_reasons", "requests"
   add_foreign_key "deny_reasons", "users"
+  add_foreign_key "tasks", "employees"
+  add_foreign_key "tasks", "requests"
 end
