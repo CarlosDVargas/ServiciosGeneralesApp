@@ -37,8 +37,9 @@ class FeedbacksController < ApplicationController
 
   # PATCH/PUT /feedbacks/1 or /feedbacks/1.json
   def update
+    newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction]).permit(:observations, :satisfaction)
     respond_to do |format|
-      if @feedback.update(feedback_params)
+      if @feedback.update(newfeedback)
         format.html { redirect_to feedback_url(@feedback), notice: "Feedback was successfully updated." }
         format.json { render :show, status: :ok, location: @feedback }
       else
