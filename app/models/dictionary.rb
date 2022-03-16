@@ -4,7 +4,7 @@ class Dictionary
     def initialize
         @requesterTypes = {teacher: 'Docente', administrator: 'Administativo', student: 'Estudiante'}
         @studentAssociations = {assosiation: 'Asociación Estudiantil', feucr: 'FEUCR'}
-        @workBuildings = {gym: 'Gimnasio', sciencieLabs: 'Laboratiorios Ciencias Generales', other: 'Otro'} 
+        @workBuildings = {gym: 'Gimnasio', sciencie_labs: 'Laboratiorios Ciencias Generales', cafeteria: 'Comedor', other: 'Otro'} 
         @workTypes = {electrical: 'Eléctrico', plumbing: 'Plomería', wood: "Ebanistería", other: 'Otro'}
     end
 
