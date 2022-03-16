@@ -21,7 +21,8 @@ class FeedbacksController < ApplicationController
 
   # POST /feedbacks or /feedbacks.json
   def create
-    @feedback = Feedback.new(feedback_params)
+    newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction]).permit(:observations, :satisfaction)
+    @feedback = Feedback.new(newfeedback)
 
     respond_to do |format|
       if @feedback.save

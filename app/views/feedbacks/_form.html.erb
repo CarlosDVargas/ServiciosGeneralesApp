@@ -18,9 +18,37 @@
 
   <div>
     <%= form.label :satisfaction, style: "display: block" %>
-    <%= form.number_field :satisfaction %>
+    <div>
+      <ul>
+        <li>
+          <%= form.radio_button :satisfaction, 1, :name => "satisfaction"%>
+          <label>1</label>
+          <span>Muy negativa</span>
+        </li>
+        <li>
+          <%= form.radio_button :satisfaction, 2, :name => "satisfaction"%>
+          <label>2</label>
+          <span>Regular</span>
+        </li>
+        <li>
+          <%= form.radio_button :satisfaction, 3, :name => "satisfaction"%>
+          <label>3</label>
+          <span>Buena</span>
+        </li>
+        <li>
+          <%= form.radio_button :satisfaction, 4, :name => "satisfaction"%>
+          <label>4</label>
+          <span>Muy buena</span>
+        </li>
+        <li>
+          <%= form.radio_button :satisfaction, 5, :name => "satisfaction"%>
+          <label>5</label>
+          <span>Excelente</span>
+        </li>
+      </ul>
+    </div>
   </div>
-
+    
   <div>
     <%= form.submit(feedback.new_record? ? "Guardar" : "Actualizar", class: "btn btn-sm btn-success") %>
   </div>
