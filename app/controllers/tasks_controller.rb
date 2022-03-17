@@ -14,7 +14,6 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    byebug
     @task = Task.new
   end
 
