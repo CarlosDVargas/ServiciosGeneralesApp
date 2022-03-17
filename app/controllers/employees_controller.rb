@@ -19,34 +19,6 @@ class EmployeesController < ApplicationController
       @employees = Employee.all
     end
 
-    #Nota, código de abajo guardado para usar después para posible optimización
-
-    # method = params[:commit]
-    # if method == "Filtrar"
-    #   if params[:active] && params[:inactive]
-    #     @status = nil
-    #     @employees = Employee.all
-    #   elsif params[:active]
-    #     @status = "active"
-    #     @employees = Employee.where(status: true)
-    #   elsif params[:inactive]
-    #     @status = "inactive"
-    #     @employees = Employee.where(status: false)
-    #   else
-    #     @status = nil
-    #     @employees = Employee.all
-    #   end
-    # else
-    #   @employees = Employee.all
-    # end
-    #case @status
-    #when 'active'
-    #  @employees = Employee.where(status: true)
-    #when 'inactive'
-    #  @employees = Employee.where(status: false)
-    #else
-    #  @employees = Employee.all
-    #end
   end
 
   # GET /employees/1 or /employees/1.json

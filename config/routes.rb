@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+
   resources :tasks
+
+  resources :feedbacks
+
   get '/employees/deleteConfirm', to: 'employees#deleteConfirm'
   resources :employees
   
@@ -12,6 +16,7 @@ Rails.application.routes.draw do
   #The route for editing the requests is disabled for now
 
   get '/requests/reports', to: 'requests#reports'
+  get '/requests/feedback', to: 'requests#feedback'
 
   resources :requests do
     member do

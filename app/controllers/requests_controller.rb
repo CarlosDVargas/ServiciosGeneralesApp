@@ -97,6 +97,8 @@ class RequestsController < ApplicationController
     @tempRequests = []
     @filter = ""
 
+    #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
+
     if params[:rejected]
       @filter += "0"
       @requests += Request.where(status: "denied")
@@ -137,6 +139,9 @@ class RequestsController < ApplicationController
         @filter += "4"
       end
     end
+  end
+
+  def feedback
   end
 
   private
