@@ -1,26 +1,21 @@
 <div class="form-group"> 
   <%= form_tag employees_path, method: :get do %>
-
     <%= check_box_tag "active", "active", @status == "both" || @status == "active" %> Activos
     <%= check_box_tag "inactive", "inactive", @status == "both" || @status == "inactive" %> Inactivos
     <br>
-    <%= submit_tag "Filtrar", :name => 'statusfilter' %>
+    <%= submit_tag "Filtrar", :name => "statusfilter" %>
   <% end %>
 </div>
 
-
 <p style="color: green"><%= notice %></p>
 
-<% case @status 
-   when 'active' %> <h1>Trabajadores activos</h1>
-<% when 'inactive' %> <h1>Trabajadores inactivos</h1>
+<% case @status
+   when "active" %> <h1>Trabajadores activos</h1>
+<% when "inactive" %> <h1>Trabajadores inactivos</h1>
 <% else %> <h1>Lista de trabajadores</h1>
 <% end %>
 
-
 <div id="employees">
-
-
     <div class="row">
       <div class="col-9">  
         <table class="table table-bordered table-hover">
@@ -38,18 +33,17 @@
                 <td><%= employee.idCard %></td>
                 <td><%= employee.fullName %></td>
                 <td><%= employee.status ? "Activo" : "Inactivo" %></td>
-                <td><%= link_to 'Mostrar empleado', employee,
-                                              class: 'btn btn-sm btn-info' %> | 
-                    <%= link_to "Editar empleado", edit_employee_path(employee), class: 'btn btn-sm btn-success' %> | 
-                    <%= link_to 'Eliminar empleado', employee, data: { turbo_method: :delete, turbo_confirm: '¿Eliminar este registro?'},
-                                              class: 'btn btn-sm btn-danger' %></td>
+                <td><%= link_to "Mostrar empleado", employee,
+                                class: "btn btn-sm btn-info" %> | 
+                    <%= link_to "Editar empleado", edit_employee_path(employee), class: "btn btn-sm btn-success" %> | 
+                    <%= link_to "Eliminar empleado", employee, data: { turbo_method: :delete, turbo_confirm: "¿Eliminar este registro?" },
+                                                               class: "btn btn-sm btn-danger" %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
-
 </div>
 
 <%= link_to "Nuevo empleado", new_employee_path %>

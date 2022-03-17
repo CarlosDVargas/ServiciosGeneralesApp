@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_request, only: %i[ new ]
+  before_action :set_employees, only: %i[ new ]
 
   # GET /tasks or /tasks.json
   def index
@@ -12,6 +14,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
+    byebug
     @task = Task.new
   end
 
@@ -21,17 +24,19 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    set_employees_for_create
+    if @employees.nil?
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @task.errors, status: :unprocessable_entity }
 
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    else
+      @request = Request.find(params[:task][:request_id])
+      @employees.each { |employee_id| 
+        Task.create(employee_id: employee_id, request_id:@request.id)
+      }
+      redirect_to requests_path
     end
+    #@task = Task.new(task_params)
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
@@ -64,8 +69,26 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def set_request
+    @request = Request.find(params[:request])
+  end
+
+  def employee(id)
+    @employee = Employee.find(id)
+  end
+
+  def set_employees
+    @employees = Employee.all
+  end
+
+  def set_employees_for_create
+    @employees = params[:selected_employees]
+  end
+
+
+
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:employee_id, :request_id)
+    params.require(:task).permit(:employee_id, :request_id, :selected_employees[], employees:[:id])
   end
 end

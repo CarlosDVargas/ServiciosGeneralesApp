@@ -88,7 +88,7 @@ class RequestsController < ApplicationController
     when "denied"
     else
       @request.update(status: "in_process")
-      reload_index()
+      redirect_to new_task_path(:request => @request)
     end
   end
 

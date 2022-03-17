@@ -1,0 +1,28 @@
+<%= form_with(model: task, local: true) do |f| %>
+  <div class="container" >
+    <table class="table table-hover ">
+      <thead>
+        <tr>
+          <th scope="col">Cédula</th>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Asignar a la solicitud</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @employees.each do |employee| %>
+            <% if employee.status && (!@request.employees.ids.include? employee.id) %>
+              <tr>
+                <td><%= employee.idCard %></td>
+                <td><%= employee.fullName %></td>
+                <td>
+                      <%= check_box_tag 'selected_employees[]', employee.id%> 
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+      </tbody>
+    </table>
+    <%= f.hidden_field :request_id, value: request.id%>
+    <%= f.submit "Asignar empleados a la solicitud", class:"btn btn-primary"%>
+  </div>
+<% end %>
