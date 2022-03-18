@@ -1,9 +1,10 @@
 <div class="container">
   <h1>Asignar trabajadores:</h1>
   <h4>Solicitud <%= @request.id%></h4>
-
-  <%= render "employees", task: @task, request: @request %>
-
+  <div id="add-employees">
+    <%= render "employees", task: @task, request: @request, list_type: "add" %>
+  </div>
+  
   <br>
 
   <div>

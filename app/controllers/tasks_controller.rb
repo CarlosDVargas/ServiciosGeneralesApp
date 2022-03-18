@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
-  before_action :set_request, only: %i[ new ]
-  before_action :set_employees, only: %i[ new ]
+  before_action :set_task, only: %i[ show ]
+  before_action :set_request, only: %i[ new edit ]
+  before_action :set_employees, only: %i[ new edit ]
 
   # GET /tasks or /tasks.json
   def index
@@ -17,38 +17,35 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  # GET /tasks/1/edit
+  # GET /tasks/edit
   def edit
   end
 
   # POST /tasks or /tasks.json
   def create
     set_employees_for_create
-    if @employees.nil?
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: @task.errors, status: :unprocessable_entity }
-
-    else
-      @request = Request.find(params[:task][:request_id])
-      @employees.each { |employee_id| 
-        Task.create(employee_id: employee_id, request_id:@request.id)
+    @request = Request.find(params[:request_id])
+    if !@employees.nil?
+      @employees.each { |employee_id|
+        Task.create(employee_id: employee_id, request_id: @request.id)
       }
-      redirect_to requests_path
     end
-    #@task = Task.new(task_params)
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+    if !set_employees_for_destroy.nil?
+      @request = Request.find(params[:request_id])
+      if !@employees.nil?
+        @employees.each { |employee_id|
+          task = Task.where(employee_id: Integer(employee_id), request_id: @request.id)
+          task.destroy_all
+        }
       end
+    elsif !set_employees_for_create.nil?
+      create
     end
+    redirect_to edit_task_path(request => @request)
   end
 
   # DELETE /tasks/1 or /tasks/1.json
@@ -81,13 +78,15 @@ class TasksController < ApplicationController
   end
 
   def set_employees_for_create
-    @employees = params[:selected_employees]
+    @employees = params[:selected_employees_to_add]
   end
 
-
+  def set_employees_for_destroy
+    @employees = params[:selected_employees_to_remove]
+  end
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:employee_id, :request_id, :selected_employees[], employees:[:id])
+    params.require(:task).permit(:employee_id, :request_id, :selected_employees[], employees: [:id])
   end
 end

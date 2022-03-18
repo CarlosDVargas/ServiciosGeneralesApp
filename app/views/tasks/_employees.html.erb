@@ -1,5 +1,6 @@
-<%= form_with(model: task, local: true) do |f| %>
+<%= form_with(model: task) do |f| %>
   <div class="container" >
+
     <table class="table table-hover ">
       <thead>
         <tr>
@@ -10,19 +11,19 @@
       </thead>
       <tbody>
           <% @employees.each do |employee| %>
-            <% if employee.status && (!@request.employees.ids.include? employee.id) %>
-              <tr>
-                <td><%= employee.idCard %></td>
-                <td><%= employee.fullName %></td>
-                <td>
-                      <%= check_box_tag 'selected_employees[]', employee.id%> 
-                </td>
-              </tr>
+            <% if list_type == "add" %>
+              <% if employee.status && (!@request.employees.ids.include? employee.id) %>
+                <%= render 'table_col', employee: employee, list_type: list_type  %>
+              <% end %>
+            <% else %>
+              <% if (@request.employees.ids.include? employee.id) %>
+                <%= render 'table_col', employee: employee, list_type: list_type  %>
+              <% end %>
             <% end %>
           <% end %>
       </tbody>
     </table>
     <%= f.hidden_field :request_id, value: request.id%>
-    <%= f.submit "Asignar empleados a la solicitud", class:"btn btn-primary"%>
+    <%= f.submit(list_type == 'add' ? 'Asignar empleados a la solicitud' : 'Desasignar empleados de la solicitud', class:"btn btn-primary") %>
   </div>
 <% end %>

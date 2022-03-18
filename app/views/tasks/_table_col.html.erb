@@ -1,0 +1,7 @@
+<tr>
+  <td><%= employee.idCard %></td>
+  <td><%= employee.fullName %></td>
+  <td>
+    <%= check_box_tag "selected_employees_to_#{list_type}[]", employee.id%> 
+  </td>
+</tr>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/tasks/edit', to: 'tasks#edit', as: 'edit_task'
+  post '/tasks/edit', to: 'tasks#update'
   resources :tasks
 
   resources :feedbacks

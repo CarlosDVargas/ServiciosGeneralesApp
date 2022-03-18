@@ -32,13 +32,18 @@
           <div class="grid-item">
             <%= link_to "Ver solicitud", request, class: "action-button" %>
           </div>
-          <% if request.status == "pending" %>
-            <div class="grid-item"> 
-              <%= link_to "Atender", change_status_request_path(request), class: "action-button" %>
-            </div>
-            <div class="grid-item">
-              <%= link_to "Rechazar", edit_request_path(request), class: "action-button" %>
-            </div>
+          <% case request.status
+             when "pending" %>
+              <div class="grid-item"> 
+                <%= link_to "Atender", change_status_request_path(request), class: "action-button" %>
+              </div>
+              <div class="grid-item">
+                <%= link_to "Rechazar", edit_request_path(request), class: "action-button" %>
+              </div>
+          <% when "in_process" %>
+              <div class="grid-item"> 
+                <%= link_to "Editar asignaciones", edit_task_path(:request => request.id), class: "action-button" %>
+              </div>
           <% end %>
         </div>
       </td>
