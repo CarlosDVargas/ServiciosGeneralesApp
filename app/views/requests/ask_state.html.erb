@@ -1,0 +1,24 @@
+<%= form_with(scope: :request, url: ask_state_path, local: true) do |form| %>
+
+    <div id="requester_information" class="form-group"> 
+      <p>Ver estado de solicitud</p>
+      <div>
+        <p>
+          <%= form.label "Ingrese el número de la solicitud", style: "display: block" %>
+          <%= form.number_field :request_number %>
+        </p>
+      </div>
+  
+      <div>
+        <p>
+          <%= form.label "Ingrese la dirección de correo electrónico", style: "display: block" %>
+          <%= form.text_field :requester_email %>
+        </p>
+      </div>
+ 
+
+    <div>
+      <%= form.submit "Ver estado" %>
+    </div>
+<% end %>
+  

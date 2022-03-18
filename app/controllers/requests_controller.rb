@@ -144,6 +144,20 @@ class RequestsController < ApplicationController
   def feedback
   end
 
+  def ask_state
+  end
+
+  def search_state
+    if params[:request][:request_number] && params[:request][:requester_email]
+      @request = Request.where(id: params[:request][:request_number].to_i, requester_mail: params[:request][:requester_email]).first
+    end
+    if @request != nil
+      redirect_to request_url(@request)
+    else
+      render 'ask_state'
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

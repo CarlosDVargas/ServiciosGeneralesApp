@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   get '/requests/reports', to: 'requests#reports'
   get '/requests/feedback', to: 'requests#feedback'
+  get 'ask_state', to: 'requests#ask_state'
+  post 'ask_state', to: 'requests#search_state'
 
   resources :requests do
     member do
