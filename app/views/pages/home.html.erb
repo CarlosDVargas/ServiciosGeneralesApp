@@ -14,4 +14,14 @@
             </button>
         </div>
     </div>
+    <div class="container">
+            <% if current_user %>
+                <h1> Hello <%= current_user.name %></h1>
+                <%= link_to 'Edit', edit_user_registration_path %>
+                <%= button_to 'Log_Out', destroy_user_session_path, method: :delete%>
+            <% else %>
+                <%= link_to "Sign_up", new_user_registration_path %>
+                <%= link_to "Log In", new_user_session_path %>
+            <% end %>
+        </div>
 </div>

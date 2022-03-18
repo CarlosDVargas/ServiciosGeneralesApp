@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+        sessions: 'users/sessions',
+        registrations: 'users/registrations'
+      }
 
   get '/tasks/edit', to: 'tasks#edit', as: 'edit_task'
   post '/tasks/edit', to: 'tasks#update'
@@ -14,7 +18,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root 'pages#home'
-  resources :users
+  
   #The route for editing the requests is disabled for now
 
   get '/requests/reports', to: 'requests#reports'
