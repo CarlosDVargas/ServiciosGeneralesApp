@@ -25,9 +25,23 @@
               <%= link_to "Listar", employees_path, class: "dropdown-item" %>
             </div>
           </li>
+          <% if current_user %>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Cuenta
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to "Editar cuenta", edit_user_registration_path, class: "dropdown-item" %>
+              <%= button_to 'Cerrar sesión', destroy_user_session_path, class:"dropdown-item btn btn-default" ,method: :delete%>
+            </div>
+          </li>
+          <% else %>
+            <li class="nav-item dropdown">
+              <%= link_to 'Iniciar Sesión', new_user_session_path, class:"nav-link"%>
+            </li>
+          <% end %>
           
         </ul>
-        
       </div>
     </div>
 </nav>

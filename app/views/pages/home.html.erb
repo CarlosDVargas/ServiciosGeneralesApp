@@ -4,24 +4,10 @@
             <h3> Bienvenido a Page Name: </h3>
         </div>
         <div class="grid-item"> 
-            <button class="action-button">
-                <%= link_to "Realizar una solicitud", new_request_path %>
-            </button>
+                <%= link_to "Realizar una solicitud", new_request_path, class:"btn btn-primary"%>
             <br>
             <br>
-            <button class="action-button">
-                <%= link_to "Ver estado de una solicitud", ask_state_path %>
-            </button>
+                <%= link_to "Ver estado de una solicitud", ask_state_path, class:"btn btn-primary"%>
         </div>
     </div>
-    <div class="container">
-            <% if current_user %>
-                <h1> Hello <%= current_user.name %></h1>
-                <%= link_to 'Edit', edit_user_registration_path %>
-                <%= button_to 'Log_Out', destroy_user_session_path, method: :delete%>
-            <% else %>
-                <%= link_to "Sign_up", new_user_registration_path %>
-                <%= link_to "Log In", new_user_session_path %>
-            <% end %>
-        </div>
 </div>
