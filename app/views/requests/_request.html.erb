@@ -61,4 +61,8 @@
     <%= request.work_description %>
   </p>
 
+  <% if request.status == "finished" %>
+    <%= link_to "Enviar feedback", new_feedback_path, class:"btn btn-primary" %>
+  <% end %>
+
 </div>

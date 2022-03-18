@@ -1,4 +1,4 @@
-<%= form_with(scope: :request, url: ask_state_path, local: true) do |form| %>
+<%= form_with(scope: :session, url: ask_state_path, local: true) do |form| %>
 
     <div id="requester_information" class="form-group"> 
       <p>Ver estado de solicitud</p>
@@ -16,6 +16,7 @@
         </p>
       </div>
  
+    <%= link_to "Cancelar", root_path %>
 
     <div>
       <%= form.submit "Ver estado" %>

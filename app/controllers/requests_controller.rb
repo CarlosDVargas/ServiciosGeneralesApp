@@ -141,17 +141,15 @@ class RequestsController < ApplicationController
     end
   end
 
-  def feedback
-  end
-
   def ask_state
   end
 
   def search_state
-    if params[:request][:request_number] && params[:request][:requester_email]
-      @request = Request.where(id: params[:request][:request_number].to_i, requester_mail: params[:request][:requester_email]).first
+    if params[:session][:request_number] && params[:session][:requester_email]
+      @request = Request.where(id: params[:session][:request_number].to_i, requester_mail: params[:session][:requester_email]).first
     end
     if @request != nil
+      session[:request_id] = @request.id
       redirect_to request_url(@request)
     else
       render 'ask_state'

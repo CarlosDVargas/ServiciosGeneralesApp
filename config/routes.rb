@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   #The route for editing the requests is disabled for now
 
   get '/requests/reports', to: 'requests#reports'
-  get '/requests/feedback', to: 'requests#feedback'
   get 'ask_state', to: 'requests#ask_state'
   post 'ask_state', to: 'requests#search_state'
 

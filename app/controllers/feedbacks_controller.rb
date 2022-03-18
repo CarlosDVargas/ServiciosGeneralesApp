@@ -12,7 +12,10 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/new
   def new
+    
+    @request ||= Request.find(session[:request_id]) if session[:request_id]
     @feedback = Feedback.new
+
   end
 
   # GET /feedbacks/1/edit
@@ -21,12 +24,13 @@ class FeedbacksController < ApplicationController
 
   # POST /feedbacks or /feedbacks.json
   def create
-    newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction]).permit(:observations, :satisfaction)
+    newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction], request_id: session[:request_id]).permit(:observations, :satisfaction, :request_id)
     @feedback = Feedback.new(newfeedback)
+    byebug
 
     respond_to do |format|
       if @feedback.save
-        format.html { redirect_to feedback_url(@feedback), notice: "Feedback was successfully created." }
+        format.html { redirect_to feedback_url(@feedback), notice: "Feedback enviado." }
         format.json { render :show, status: :created, location: @feedback }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +44,7 @@ class FeedbacksController < ApplicationController
     newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction]).permit(:observations, :satisfaction)
     respond_to do |format|
       if @feedback.update(newfeedback)
-        format.html { redirect_to feedback_url(@feedback), notice: "Feedback was successfully updated." }
+        format.html { redirect_to feedback_url(@feedback), notice: "Feedback actualizado." }
         format.json { render :show, status: :ok, location: @feedback }
       else
         format.html { render :edit, status: :unprocessable_entity }
