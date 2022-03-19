@@ -1,7 +1,7 @@
 <%= form_with(model: employee) do |form| %>
   <% if employee.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+      <h2><%= pluralize(employee.errors.count, "error") %> evitó que este empleado fuera agregado:</h2>
 
       <ul>
         <% employee.errors.each do |error| %>

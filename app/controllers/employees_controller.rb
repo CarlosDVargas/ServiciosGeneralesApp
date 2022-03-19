@@ -40,10 +40,13 @@ class EmployeesController < ApplicationController
   # POST /employees or /employees.json
   def create
     @employee = Employee.new(employee_params)
+    if !@employee.idCard.nil? && !@employee.fullName.nil? && !@employee.email.nil?
+      @user = User.new(:email => @employee.email, :password => "Con#{@employee.idCard}", :name => @employee.fullName)
+      @user.save
+    end
+    @employee.write_attribute(:user_id, @user.id)
     respond_to do |format|
       if @employee.save
-        @user = User.new(:email => @employee.email, :password => "Con#{@employee.idCard}", :name => @employee.fullName)
-        @user.save
         format.html { redirect_to employee_url(@employee), notice: "Empleado creado correctamente." }
         format.json { render :show, status: :created, location: @employee }
       else
