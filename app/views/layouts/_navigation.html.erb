@@ -7,25 +7,30 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Solicitudes
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to "Listar", requests_path, class: "dropdown-item" %>
-              <%= link_to "Reportes", requests_reports_path, class: "dropdown-item" %>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Empleados
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to "Agregar", new_employee_path, class: "dropdown-item" %>
-              <%= link_to "Listar", employees_path, class: "dropdown-item" %>
-            </div>
-          </li>
           <% if current_user %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Solicitudes
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to "Listar", requests_path, class: "dropdown-item" %>
+                <% if current_user.role == "admin" %>
+                  <%= link_to "Reportes", requests_reports_path, class: "dropdown-item" %>
+                <% end %>
+              </div>
+            </li>
+            <% if current_user.role == "admin" %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Empleados
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <%= link_to "Agregar", new_employee_path, class: "dropdown-item" %>
+                  <%= link_to "Listar", employees_path, class: "dropdown-item" %>
+                </div>
+              </li>
+            <% end %>
+            
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Cuenta

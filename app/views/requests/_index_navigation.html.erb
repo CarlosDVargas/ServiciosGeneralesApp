@@ -8,10 +8,13 @@
   <button>
     <%= link_to "Finalizadas", requests_path(:status => "completed"), class: "tablinks" %>
   </button>
-  <button>
-    <%= link_to "Cerradas", requests_path(:status => "closed"), class: "tablinks" %>
-  </button>
-  <button>
-    <%= link_to "Rechazadas", requests_path(:status => "denied"), class: "tablinks" %>
-  </button>
+  <% if current_user.role == "admin" %>
+    <button>
+      <%= link_to "Cerradas", requests_path(:status => "closed"), class: "tablinks" %>
+    </button>
+    <button>
+      <%= link_to "Rechazadas", requests_path(:status => "denied"), class: "tablinks" %>
+    </button>
+  <% end %>
+  
 </div>

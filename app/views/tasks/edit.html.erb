@@ -1,18 +1,23 @@
 <div class="container">
-  <h1>Editar Asignaciones</h1>
+  <h1>Modificar Asignación</h1>
   <h4>Solicitud <%= @request.id %></h4>
-  <div id="add-employees" class="container">
-    <h6>Asignar trabajadores:</h6>
-    <%= render "employees", task: @task, request: @request, list_type: "add" %>
-  </div>
+  <% if current_user.role == 'admin' %>
+    <div id="add-employees" class="container">
+      <h6>Asignar trabajadores:</h6>
+      <%= render "employees", task: @task, request: @request, list_type: "add" %>
+    </div>
 
-  <br>
+    <br>
 
-  <div id="remove-employees" class="container">
-    <h6>Remover trabajadores:</h6>
-    <%= render "employees", task: @task, request: @request, list_type: "remove" %>
-  </div>
+    <div id="remove-employees" class="container">
+      <h6>Remover trabajadores:</h6>
+      <%= render "employees", task: @task, request: @request, list_type: "remove" %>
+    </div>
 
+  <% elsif current_user.role == 'employee'%>
+
+  <% end %>
+  
   <br>
 
   <div>

@@ -4,12 +4,12 @@
 
         <template data-nested-form-target="template"> 
             <%= f.fields_for :deny_reasons, DenyReason.new, child_index: "TEMPLATE_RECORD" do |reason| %>
-                <%= render "deny_reason_fields", f: reason, request: request %>
+                <%= render "requests/admin_views/deny_reason_fields", f: reason, request: request %>
             <% end %>
         </template>
         
         <%= f.fields_for :deny_reasons do |reason| %>
-                <%= render "deny_reason_fields", f: reason, request: request %>
+                <%= render "requests/admin_views/deny_reason_fields", f: reason, request: request %>
         <% end %>
 
         <div data-nested-form-target="add_item">
