@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_19_021950) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_20_200456) do
   create_table "deny_reasons", force: :cascade do |t|
     t.string "description"
     t.integer "user_id", null: false
@@ -63,6 +63,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_021950) do
     t.integer "request_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.integer "time_duration"
     t.index ["employee_id"], name: "index_tasks_on_employee_id"
     t.index ["request_id"], name: "index_tasks_on_request_id"
   end
