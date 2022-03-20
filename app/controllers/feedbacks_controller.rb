@@ -1,5 +1,6 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: %i[ show edit update destroy ]
+  before_action :set_request, only: %i[ new show create edit update destroy ]
 
   # GET /feedbacks or /feedbacks.json
   def index
@@ -12,10 +13,7 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/new
   def new
-    
-    @request ||= Request.find(session[:request_id]) if session[:request_id]
     @feedback = Feedback.new
-
   end
 
   # GET /feedbacks/1/edit
@@ -24,10 +22,8 @@ class FeedbacksController < ApplicationController
 
   # POST /feedbacks or /feedbacks.json
   def create
-    newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction], request_id: session[:request_id]).permit(:observations, :satisfaction, :request_id)
+    newfeedback = ActionController::Parameters.new(observations: feedback_params.values[0], satisfaction: params[:satisfaction], request_id: @request.id).permit(:observations, :satisfaction, :request_id)
     @feedback = Feedback.new(newfeedback)
-    byebug
-
     respond_to do |format|
       if @feedback.save
         format.html { redirect_to feedback_url(@feedback), notice: "Feedback enviado." }
@@ -58,7 +54,7 @@ class FeedbacksController < ApplicationController
     @feedback.destroy
 
     respond_to do |format|
-      format.html { redirect_to feedbacks_url, notice: "Feedback was successfully destroyed." }
+      format.html { redirect_to feedbacks_url, notice: "Feedback eliminado." }
       format.json { head :no_content }
     end
   end
@@ -67,6 +63,10 @@ class FeedbacksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_feedback
       @feedback = Feedback.find(params[:id])
+    end
+
+    def set_request
+      @request ||= Request.find(session[:request_id]) if session[:request_id]
     end
 
     # Only allow a list of trusted parameters through.

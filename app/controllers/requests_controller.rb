@@ -23,6 +23,9 @@ class RequestsController < ApplicationController
 
   # GET /requests/1 or /requests/1.json
   def show
+    if @request.status == "denied"
+      @reasons = DenyReason.where(request_id: @request.id)
+    end
   end
 
   # GET /requests/new

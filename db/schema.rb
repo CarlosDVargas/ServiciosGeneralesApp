@@ -22,9 +22,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_021950) do
   end
 
   create_table "employees", force: :cascade do |t|
-    t.string "idCard", unique: true
+    t.string "idCard"
     t.string "fullName"
-    t.string "email", unique: true
+    t.string "email"
     t.boolean "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
