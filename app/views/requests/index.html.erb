@@ -36,7 +36,7 @@
           <% if current_user.role == "admin"%>
             <%= render 'requests/admin_views/admin_request_actions', request: request %>
           <% else %>
-            <%= render 'requests/admin_views/admin_request_actions', request: request %>
+            <%= render 'requests/employee_views/employee_request_actions', request: request %>
           <% end %>
 
         </div>

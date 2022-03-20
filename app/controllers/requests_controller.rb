@@ -7,18 +7,7 @@ class RequestsController < ApplicationController
 
   # GET /requests or /requests.json
   def index
-    case @status
-    when "in_process"
-      @requests = Request.where(status: "in_process")
-    when "completed"
-      @requests = Request.where(status: "completed")
-    when "closed"
-      @requests = Request.where(status: "closed")
-    when "denied"
-      @requests = Request.where(status: "denied")
-    else
-      @requests = Request.where(status: "pending")
-    end
+    set_requests
   end
 
   # GET /requests/1 or /requests/1.json
@@ -91,7 +80,10 @@ class RequestsController < ApplicationController
     when "denied"
     else
       @request.update(status: "in_process")
-      redirect_to new_task_path(:request => @request)
+      if current_user.role == "employee"
+      else
+        redirect_to new_task_path(:request => @request)
+      end
     end
   end
 
@@ -155,7 +147,7 @@ class RequestsController < ApplicationController
       session[:request_id] = @request.id
       redirect_to request_url(@request)
     else
-      render 'ask_state'
+      render "ask_state"
     end
   end
 
@@ -164,6 +156,42 @@ class RequestsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_request
     @request = Request.find(params[:id])
+  end
+
+  def set_requests
+    if current_user.role == "employee"
+      employee = Employee.where(user_id: current_user).first
+      employee_requests = employee.requests
+      case @status
+      when "in_process"
+        @requests = find_requests(employee_requests, "in_process")
+      when "completed"
+        @requests = find_requests(employee_requests, "completed")
+      when "closed"
+        @requests = find_requests(employee_requests, "closed")
+      when "denied"
+        @requests = find_requests(employee_requests, "denied")
+      else
+        @requests = find_requests(employee_requests, "pending")
+      end
+    else
+      case @status
+      when "in_process"
+        @requests = find_requests(Request.all, "in_process")
+      when "completed"
+        @requests = find_requests(Request.all, "completed")
+      when "closed"
+        @requests = find_requests(Request.all, "closed")
+      when "denied"
+        @requests = find_requests(Request.all, "denied")
+      else
+        @requests = find_requests(Request.all, "pending")
+      end
+    end
+  end
+
+  def find_requests(set, status)
+    set.where(status: status)
   end
 
   def deny_reasons

@@ -1,9 +1,11 @@
 <div class="tab">
+  <% if current_user.role == "admin" %>
+    <button>
+      <%= link_to "Pendientes", requests_path(:status => "pending"), class: "tablinks" %>
+    </button>
+  <% end %>
   <button>
-    <%= link_to "Pendientes", requests_path(:status => "pending"), class: "tablinks" %>
-  </button>
-  <button>
-    <%= link_to "En Proceso", requests_path(:status => "in_process"), class: "tablinks" %>
+    <%= link_to (current_user.role == "admin" ? "En Proceso" : "Asignadas"), requests_path(:status => "in_process"), class: "tablinks" %>
   </button>
   <button>
     <%= link_to "Finalizadas", requests_path(:status => "completed"), class: "tablinks" %>

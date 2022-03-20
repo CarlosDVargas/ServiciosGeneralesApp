@@ -1,6 +1,6 @@
 class Employee < ApplicationRecord
   has_many :tasks
-  has_many :requests, through: :task
+  has_many :requests, through: :tasks
 
   has_one :user
 
