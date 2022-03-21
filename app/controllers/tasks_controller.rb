@@ -1,6 +1,9 @@
+require "./app/models/dictionary.rb"
+
 class TasksController < ApplicationController
   before_action :set_request, only: %i[ new edit ]
   before_action :set_employees, only: %i[ new edit ]
+  before_action :set_dictionary, only: %i[ edit ]
 
   # GET /tasks or /tasks.json
   def index
@@ -99,6 +102,10 @@ class TasksController < ApplicationController
 
   def set_employees_for_destroy
     @employees = params[:selected_employees_to_remove]
+  end
+
+  def set_dictionary
+    @dictionary = Dictionary.new()
   end
 
   # Only allow a list of trusted parameters through.

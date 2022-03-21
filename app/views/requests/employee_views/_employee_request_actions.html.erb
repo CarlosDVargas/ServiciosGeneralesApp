@@ -1,9 +1,8 @@
 <% case request.status
-   when "pending" %>
+   when "in_process" %>
     <div class="grid-item"> 
-      <%= link_to "Atender", change_status_request_path(request), class: "action-button" %>
+      <%= link_to "Atender", edit_task_path(request: request), class: "action-button" %>
     </div>
-<% when "in_process" %>
     <div class="grid-item"> 
       <%= link_to "Finalizar", "#", class: "action-button" %>
     </div>

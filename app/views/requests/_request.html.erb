@@ -1,75 +1,81 @@
 <div id="<%= dom_id request %>">
-  <p>
-    <h1>Estado de solicitud: <%= request.status %></h1>
-  </p>
 
-  <p>
-    <strong>Dirección email del solicitante:</strong>
-    <%= request.requester_mail %>
-  </p>
-
-
-  <% if request.status != "pending" && request.status != "denied" %>
-
-    <p>
-      <strong>Nombre del solicitante:</strong>
-      <%= request.requester_name %>
-    </p>
-
-    <p>
-      <strong>Extensión del solicitante:</strong>
-      <%= request.requester_extension %>
-    </p>
-
-    <p>
-      <strong>Número telefónico de solicitante:</strong>
-      <%= request.requester_phone %>
-    </p>
-
-    <p>
-      <strong>Identificación del solicitante:</strong>
-      <%= request.requester_id %>
-    </p>
-
-    <p>
-      <strong>Tipo de solicitante:</strong>
-      <%= @dictionary.requesterTypes[request.requester_type.to_sym] %>
-    </p>
-
-    <% if request.requester_type == "student" %>
-      <p>
-        <strong>Carnet del solicitante:</strong>
-        <%= request.student_id %>
-      </p>
-
-      <p>
-        <strong>Dependencia estudiantil:</strong>
-        <%= @dictionary.studentAssociations[request.student_assosiation.to_sym] %>
-      </p>
-    <% end %>
-    
-    <p>
-      <strong>Edificio:</strong>
-      <%= @dictionary.workBuildings[request.work_building.to_sym] %>
-    </p>
-
-    <p>
-      <strong>Lugar del trabajo a realizar:</strong>
-      <%= request.work_location %>
-    </p>
-
-    <p>
-      <strong>Tipo de trabajo a realizar:</strong>
-      <%= @dictionary.workTypes[request.work_type.to_sym] %>
-    </p>
-
-    <p>
-      <strong>Descripción del trabajo a realizar:</strong>
-      <%= request.work_description %>
-    </p>
-
+  <% case request.status
+    when "in_process" %> <h3>Solicitud en Proceso</h3>
+  <% when "completed" %> <h3>Solicitud Finalizada</h3>
+  <% when "closed" %> <h3>Solicitud Cerrada</h3>
+  <% when "denied" %> <h3>Solicitud Rechazada</h3>
+  <% else %> <h3>Solicitud Pendiente</h3>
   <% end %>
 
+  <div class="container">
+    <p>
+      <strong>Dirección email del solicitante:</strong>
+      <%= request.requester_mail %>
+    </p>
+
+      <% if request.status != "pending" && request.status != "denied" %>
+
+      <p>
+        <strong>Nombre del solicitante:</strong>
+        <%= request.requester_name %>
+      </p>
+
+      <p>
+        <strong>Extensión del solicitante:</strong>
+        <%= request.requester_extension %>
+      </p>
+
+      <p>
+        <strong>Número telefónico de solicitante:</strong>
+        <%= request.requester_phone %>
+      </p>
+
+      <p>
+        <strong>Identificación del solicitante:</strong>
+        <%= request.requester_id %>
+      </p>
+
+      <p>
+        <strong>Tipo de solicitante:</strong>
+        <%= @dictionary.requesterTypes[request.requester_type.to_sym] %>
+      </p>
+
+      <% if request.requester_type == "student" %>
+        <p>
+          <strong>Carnet del solicitante:</strong>
+          <%= request.student_id %>
+        </p>
+
+        <p>
+          <strong>Dependencia estudiantil:</strong>
+          <%= @dictionary.studentAssociations[request.student_assosiation.to_sym] %>
+        </p>
+      <% end %>
+      
+      <p>
+        <strong>Edificio:</strong>
+        <%= @dictionary.workBuildings[request.work_building.to_sym] %>
+      </p>
+
+      <p>
+        <strong>Lugar del trabajo a realizar:</strong>
+        <%= request.work_location %>
+      </p>
+
+      <p>
+        <strong>Tipo de trabajo a realizar:</strong>
+        <%= @dictionary.workTypes[request.work_type.to_sym] %>
+      </p>
+
+      <p>
+        <strong>Descripción del trabajo a realizar:</strong>
+        <%= request.work_description %>
+      </p>
+
+    <% end %>
+  </div>
+  
   <% if request.status == "denied" %>
     <div>
       <label>Razones de rechazo de solicitud:</label>
