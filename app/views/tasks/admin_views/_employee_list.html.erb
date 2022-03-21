@@ -13,11 +13,11 @@
           <% @employees.each do |employee| %>
             <% if list_type == "add" %>
               <% if employee.status && (!@request.employees.ids.include? employee.id) %>
-                <%= render 'table_col', employee: employee, list_type: list_type  %>
+                <%= render '/tasks/admin_views/table_col', employee: employee, list_type: list_type  %>
               <% end %>
             <% else %>
               <% if (@request.employees.ids.include? employee.id) %>
-                <%= render 'table_col', employee: employee, list_type: list_type  %>
+                <%= render '/tasks/admin_views/table_col', employee: employee, list_type: list_type  %>
               <% end %>
             <% end %>
           <% end %>

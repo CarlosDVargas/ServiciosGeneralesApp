@@ -1,21 +1,21 @@
 <div class="container">
-  <h1>Modificar Asignación</h1>
+  
+  <h1><%= (current_user.role == 'admin') ? 'Modificar asigaciones' : 'Trabajo asignado' %></h1>
   <h4>Solicitud <%= @request.id %></h4>
-  <% if current_user.role == 'admin' %>
+  <% if current_user.role == 'employee' %>
+    <%= render "/tasks/employee_views/employee_view" %>
+  <% else %>
     <div id="add-employees" class="container">
       <h6>Asignar trabajadores:</h6>
-      <%= render "employees", task: @task, request: @request, list_type: "add" %>
+      <%= render "/tasks/admin_views/employee_list", task: @task, request: @request, list_type: "add" %>
     </div>
 
     <br>
 
     <div id="remove-employees" class="container">
       <h6>Remover trabajadores:</h6>
-      <%= render "employees", task: @task, request: @request, list_type: "remove" %>
+      <%= render "/tasks/admin_views/employee_list", task: @task, request: @request, list_type: "remove" %>
     </div>
-
-  <% elsif current_user.role == 'employee'%>
-
   <% end %>
   
   <br>

@@ -1,15 +1,10 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show ]
   before_action :set_request, only: %i[ new edit ]
   before_action :set_employees, only: %i[ new edit ]
 
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
-  end
-
-  # GET /tasks/1 or /tasks/1.json
-  def show
   end
 
   # GET /tasks/new
@@ -19,6 +14,10 @@ class TasksController < ApplicationController
 
   # GET /tasks/edit
   def edit
+    if current_user.role == "employee"
+      set_task
+      set_observations
+    end
   end
 
   # POST /tasks or /tasks.json
@@ -34,16 +33,24 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    if !set_employees_for_destroy.nil?
-      @request = Request.find(params[:request_id])
-      if !@employees.nil?
-        @employees.each { |employee_id|
-          task = Task.where(employee_id: Integer(employee_id), request_id: @request.id)
-          task.destroy_all
-        }
+    if current_user.role == "employee"
+      set_task
+      description = params[:task][:observations][:description]
+      if description.length > 0
+        observation = Observation.create(task_id: @task.id, user_id: current_user.id, description: description)
       end
-    elsif !set_employees_for_create.nil?
-      create
+    else
+      if !set_employees_for_destroy.nil?
+        @request = Request.find(params[:request_id])
+        if !@employees.nil?
+          @employees.each { |employee_id|
+            task = Task.where(employee_id: Integer(employee_id), request_id: @request.id)
+            task.destroy_all
+          }
+        end
+      elsif !set_employees_for_create.nil?
+        create
+      end
     end
     redirect_to edit_task_path(request => @request)
   end
@@ -61,8 +68,17 @@ class TasksController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+
+  def set_observations
+    @observations = Observation.where(task_id: @task.id, user_id: current_user.id)
+  end
+
   def set_task
-    @task = Task.find(params[:id])
+    employee_id = Employee.where(user_id: current_user.id).first.id
+    if @request.nil?
+      @request = Request.find(params[:task][:request])
+    end
+    @task = Task.where(employee_id: employee_id, request_id: @request.id).first
   end
 
   def set_request
@@ -87,6 +103,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:employee_id, :request_id, :selected_employees[], employees: [:id])
+    params.require(:task).permit(:employee_id, :request_id, :selected_employees[], employees: [:id], observations: [:description])
   end
 end

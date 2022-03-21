@@ -2,7 +2,7 @@
   <h1>Asignar trabajadores:</h1>
   <h4>Solicitud <%= @request.id%></h4>
   <div id="add-employees">
-    <%= render "employees", task: @task, request: @request, list_type: "add" %>
+    <%= render "/tasks/admin_views/employee_list", task: @task, request: @request, list_type: "add" %>
   </div>
   
   <br>

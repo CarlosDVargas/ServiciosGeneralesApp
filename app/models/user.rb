@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   after_initialize :set_default_role, :if => :new_record?
 
+  has_many :observations
+
   def set_default_role
     self.role ||= :employee
   end

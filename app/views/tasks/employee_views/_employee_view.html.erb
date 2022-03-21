@@ -1,0 +1,28 @@
+<div class="container">
+  <h5>Observaciones:</h5>
+    <div class="container overflow-auto">
+      <% if @observations.length == 0 %>
+        <p>No se ha agregado ninguna observación</p>  
+      <% else %>
+        <% @observations.each do |observation|%>
+          <p>[<%= observation.created_at.strftime("%d/%m/%Y")%>]: <%= observation.description%></p>
+        <% end %>
+      <% end %>
+    </div>
+    <br>
+    <div class="container">
+      <h5>Agregar observación:</h5>
+      <p>(Esta es una acción irreversible)</p>
+      <%= form_with(model: @task, local: true) do |f| %>
+        <%= f.fields_for :observations do |observation| %>
+             <%= observation.text_area :description %>
+        <% end %>
+
+        <%= f.hidden_field :request, value: @request.id%>
+
+        <br>
+
+        <%= f.submit 'Agregar una observación',class:"btn btn-primary btn"%>
+      <% end %>
+    </div>
+</div>
