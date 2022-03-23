@@ -229,7 +229,7 @@ class RequestsController < ApplicationController
   def reset_tasks
     tasks = @request.tasks
     tasks.each do |task|
-      task.update(completed?: true)
+      task.update(completed?: false)
     end
   end
 
