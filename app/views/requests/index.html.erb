@@ -6,7 +6,12 @@
 <% when "completed" %> <h1>Solicitudes Finalizadas</h1>
 <% when "closed" %> <h1>Solicitudes Cerradas</h1>
 <% when "denied" %> <h1>Solicitudes Rechazadas</h1>
-<% else %> <h1>Solicitudes Pendientes</h1>
+<% else %> 
+  <% if current_user.role == "employee" %>
+    <h1>Solicitudes en Proceso</h1>
+  <% else %>
+    <h1>Solicitudes Pendientes</h1>
+  <% end %>
 <% end %>
 
 

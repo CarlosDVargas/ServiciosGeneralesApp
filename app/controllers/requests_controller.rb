@@ -66,10 +66,11 @@ class RequestsController < ApplicationController
   end
 
   def change_status
+    byebug
     status = @request.status
     case status
     when "in_process"
-      @request.update(status: "pending")
+      @request.update(status: "completed")
       reload_index()
     when "completed"
       @request.update(status: "closed")
@@ -77,13 +78,9 @@ class RequestsController < ApplicationController
     when "closed"
       @request.update(status: "in_process")
       reload_index()
-    when "denied"
     else
       @request.update(status: "in_process")
-      if current_user.role == "employee"
-      else
-        redirect_to new_task_path(:request => @request)
-      end
+      redirect_to new_task_path(:request => @request)
     end
   end
 
@@ -163,16 +160,12 @@ class RequestsController < ApplicationController
       employee = Employee.where(user_id: current_user).first
       employee_requests = employee.requests
       case @status
-      when "in_process"
-        @requests = find_requests(employee_requests, "in_process")
       when "completed"
         @requests = find_requests(employee_requests, "completed")
       when "closed"
         @requests = find_requests(employee_requests, "closed")
-      when "denied"
-        @requests = find_requests(employee_requests, "denied")
       else
-        @requests = find_requests(employee_requests, "pending")
+        @requests = find_requests(employee_requests, "in_process")
       end
     else
       case @status
