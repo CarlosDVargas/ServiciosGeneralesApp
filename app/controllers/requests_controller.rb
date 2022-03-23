@@ -66,24 +66,27 @@ class RequestsController < ApplicationController
   end
 
   def change_status
+    byebug
     status = @request.status
     case status
     when "in_process"
-      @request.update(status: "pending")
+      set_task
+      @task.update(completed?: true)
+      if analyse_tasks
+        @request.update(status: "completed")
+      end
       reload_index()
     when "completed"
-      @request.update(status: "closed")
+      if params[:action] == "close"
+        @request.update(status: "closed")
+      else
+        reset_tasks
+        @request.update(status: "in_process")
+      end
       reload_index()
-    when "closed"
-      @request.update(status: "in_process")
-      reload_index()
-    when "denied"
     else
       @request.update(status: "in_process")
-      if current_user.role == "employee"
-      else
-        redirect_to new_task_path(:request => @request)
-      end
+      redirect_to new_task_path(:request => @request)
     end
   end
 
@@ -209,16 +212,12 @@ class RequestsController < ApplicationController
       employee = Employee.where(user_id: current_user).first
       employee_requests = employee.requests
       case @status
-      when "in_process"
-        @requests = find_requests(employee_requests, "in_process")
       when "completed"
         @requests = find_requests(employee_requests, "completed")
       when "closed"
         @requests = find_requests(employee_requests, "closed")
-      when "denied"
-        @requests = find_requests(employee_requests, "denied")
       else
-        @requests = find_requests(employee_requests, "pending")
+        @requests = find_requests(employee_requests, "in_process")
       end
     else
       case @status
@@ -255,13 +254,34 @@ class RequestsController < ApplicationController
     @status = params[:status]
   end
 
+  def set_task
+    @task = Task.find(params[:task_id])
+  end
+
   def reload_index()
     redirect_to requests_path, notice: "Se actualizó el estado de la solicitud"
   end
 
+  def analyse_tasks
+    tasks = @request.tasks
+    tasks.each do |task|
+      if !task.completed?
+        return false
+      end
+    end
+    return true
+  end
+
+  def reset_tasks
+    tasks = @request.tasks
+    tasks.each do |task|
+      task.update(completed?: false)
+    end
+  end
+
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
+    params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, :task_id, :action, deny_reasons: [:_destroy, :description, :request_id, :user_id])
   end
 
   def validateDate(datePartReaded, datePartDataBase, order)

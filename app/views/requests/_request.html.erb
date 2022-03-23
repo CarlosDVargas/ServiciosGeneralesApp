@@ -1,7 +1,7 @@
 <div id="<%= dom_id request %>">
 
   <% case request.status
-    when "in_process" %> <h3>Solicitud en Proceso</h3>
+     when "in_process" %> <h3>Solicitud en Proceso</h3>
   <% when "completed" %> <h3>Solicitud Finalizada</h3>
   <% when "closed" %> <h3>Solicitud Cerrada</h3>
   <% when "denied" %> <h3>Solicitud Rechazada</h3>
@@ -14,7 +14,7 @@
       <%= request.requester_mail %>
     </p>
 
-      <% if request.status != "pending" && request.status != "denied" %>
+      <% if (request.status != "pending" && request.status != "denied") || current_user %>
 
       <p>
         <strong>Nombre del solicitante:</strong>
@@ -55,7 +55,11 @@
       
       <p>
         <strong>Edificio:</strong>
-        <%= @dictionary.workBuildings[request.work_building.to_sym] %>
+        <% if !@dictionary.workBuildings[request.work_building.to_sym].nil? %>
+          <%= @dictionary.workBuildings[request.work_building.to_sym] %>
+        <% else %>
+          <%= request.work_building %>
+        <% end %></td>
       </p>
 
       <p>
@@ -65,7 +69,11 @@
 
       <p>
         <strong>Tipo de trabajo a realizar:</strong>
-        <%= @dictionary.workTypes[request.work_type.to_sym] %>
+        <% if !@dictionary.workTypes[request.work_type.to_sym].nil? %>
+          <%= @dictionary.workTypes[request.work_type.to_sym] %>
+        <% else %>
+          <%= request.work_type %>
+        <% end %>
       </p>
 
       <p>
@@ -76,7 +84,7 @@
     <% end %>
   </div>
   
-  <% if request.status == "denied" %>
+  <% if request.status == "denied" && !current_user %>
     <div>
       <label>Razones de rechazo de solicitud:</label>
       <div>
@@ -92,7 +100,7 @@
   <% end %>
 
   <% if request.status == "closed" && !current_user %>
-    <%= link_to "Enviar feedback", new_feedback_path, class:"btn btn-primary" %>
+    <%= link_to "Enviar feedback", new_feedback_path, class: "btn btn-primary" %>
   <% end %>
 
 </div>

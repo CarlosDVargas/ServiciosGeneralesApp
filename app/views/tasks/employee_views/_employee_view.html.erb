@@ -1,6 +1,6 @@
 <div class="container">
   <div class="container">
-    <%= render '/requests/request', request: @request%>
+    <%= render "/requests/request", request: @request %>
   </div>
   <br>
   <h5>Observaciones:</h5>
@@ -8,8 +8,8 @@
       <% if @observations.length == 0 %>
         <p>No se ha agregado ninguna observación</p>  
       <% else %>
-        <% @observations.each do |observation|%>
-          <p>[<%= observation.created_at.strftime("%d/%m/%Y")%>]: <%= observation.description%></p>
+        <% @observations.each do |observation| %>
+          <p>[<%= observation.created_at.strftime("%d/%m/%Y") %>]: <%= observation.description %></p>
         <% end %>
       <% end %>
     </div>
@@ -24,13 +24,14 @@
           <%= f.fields_for :observations do |observation| %>
               <%= observation.text_area :description %>
           <% end %>
-
-          <%= f.hidden_field :request, value: @request.id%>
+          <%= f.hidden_field :request, value: @request.id %>
 
           <br>
 
-          <%= f.submit 'Agregar una observación',class:"btn btn-primary btn"%>
+          <%= f.submit "Agregar una observación", class: "btn btn-primary btn-sm" %>
         <% end %>
       </div>
+      <br>
+      <%= link_to "Finalizar trabajo", change_status_request_path(@request, :task_id => @task), class: "btn btn-primary" %>
     <% end %>
 </div>
