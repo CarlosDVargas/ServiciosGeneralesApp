@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "employees" ]
+  static targets = [ "elements" ]
 
   change(event) {
     fetch(this.data.get("url"), { 
@@ -16,7 +16,7 @@ export default class extends Controller {
     })
       .then(response => response.text())
       .then(html => {
-        this.employeesTarget.innerHTML = html
+        this.elementsTarget.innerHTML = html
       })
   }
 }

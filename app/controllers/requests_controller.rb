@@ -2,7 +2,7 @@ require "./app/models/dictionary.rb"
 
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy change_status ]
-  before_action :set_dictionary, only: %i[new show edit update index create reports]
+  before_action :set_dictionary, only: %i[new show edit update index create reports request_filter]
   before_action :set_status, only: %i[index show]
 
   # GET /requests or /requests.json
@@ -94,25 +94,27 @@ class RequestsController < ApplicationController
 
     #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
 
-    if params[:denied]
-      @filter += "0"
-      @requests += Request.where(status: "denied")
-    end
+    if params[:value]
+      if params[:value][0]
+        @filter += "0"
+        @requests += Request.where(status: "denied")
+      end
 
-    if params[:pending]
-      @filter += "1"
-      @requests += Request.where(status: "pending")
-    end
+      if params[:value][1]
+        @filter += "1"
+        @requests += Request.where(status: "pending")
+      end
 
-    if params[:finished]
-      @filter += "2"
-      @requests += Request.where(status: "closed")
-    end
+      if params[:value][2]
+        @filter += "2"
+        @requests += Request.where(status: "closed")
+      end
 
-    if params[:outsourcing]
-      @filter += "3"
-      #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
-      #@requests += Request.where(status: "closed")
+      if params[:value][3]
+        @filter += "3"
+        #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
+        #@requests += Request.where(status: "closed")
+      end
     end
 
     if @filter == ""
@@ -134,6 +136,40 @@ class RequestsController < ApplicationController
         @filter += "4"
       end
     end
+  end
+
+  def request_filter
+    @requests = []
+    @tempRequests = []
+    @filter = ""
+
+    #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
+
+    if params[:value][0]
+      @filter += "0"
+      @requests += Request.where(status: "denied")
+    end
+
+    if params[:value][1]
+      @filter += "1"
+      @requests += Request.where(status: "pending")
+    end
+
+    if params[:value][2]
+      @filter += "2"
+      @requests += Request.where(status: "closed")
+    end
+
+    if params[:value][3]
+      @filter += "3"
+      #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
+      #@requests += Request.where(status: "closed")
+    end
+
+    if @filter == ""
+      @requests = Request.all
+    end
+    render partial: 'requests/report_list', locals: { requests: @requests}
   end
 
   def ask_state

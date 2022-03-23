@@ -34,9 +34,6 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :employees do
-    collection do
-      get :statusfilter
-    end
-  end
+  post 'request_filter', action: :request_filter, controller: 'requests'
+
 end

@@ -15,7 +15,7 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to "Listar", requests_path, class: "dropdown-item" %>
                 <% if current_user.role == "admin" %>
-                  <%= link_to "Reportes", requests_reports_path, class: "dropdown-item" %>
+                  <%= link_to "Reportes", reports_path, class: "dropdown-item" %>
                 <% end %>
               </div>
             </li>

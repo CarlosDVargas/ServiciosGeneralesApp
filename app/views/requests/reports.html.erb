@@ -1,3 +1,5 @@
+<p style="color: green"><%= notice %></p>
+
 <div class="form-group"> 
   <h4>Filtros</h4>
   <%= form_tag reports_path, method: :get do %>
@@ -5,47 +7,29 @@
         <%= label :year, "Fecha", style: "display: block" %>
         <%= date_select :request_year, "request_year", options = { :include_blank => true, :start_year => 1990, :end_year => Date.current.year, :selected => { :year => @year.to_i, :month => @month.to_i, :day => @day.to_i } } %>
     </p>
-    <%= check_box_tag "denied", "denied", (@filter.include? "0") %> Rechazadas
-    <%= check_box_tag "pending", "pending", (@filter.include? "1") %> Pendientes
-    <%= check_box_tag "finished", "finished", (@filter.include? "2") %> Finalizadas
-    <%= check_box_tag "outsourcing", "outsourcing", (@filter.include? "3") %> Contratación Externa
     <br>
     <%= submit_tag "Filtrar", :name => "reportsfilter" %>
   <% end %>
 </div>
 
-<p style="color: green"><%= notice %></p>
+<div data-controller="checkbox-filter" data-checkbox-filter-url="<%= request_filter_path %>">
+  <div class="form-group" id="filters">
+    <input name="filter" value="denied" type="checkbox" data-action="checkbox-filter#change" />Rechazadas
 
-<h1>Reportes de solicitudes</h1>
-<h4>Cantidad: <%= @requests.size %></h4>
+    <input name="filter" value="pending" type="checkbox" data-action="checkbox-filter#change" />Pendientes
 
-<div id="requests" class="request-table">
-  <table class= "table">
-    <tr>
-      <th class= "table-header">Consecutivo</th>
-      <th class= "table-header">Fecha solicitud</th>
-      <th class= "table-header">Edificio</th>
-      <th class= "table-header">Sitio</th>
-      <th class= "table-header">Solicitante</th>
-      <th class= "table-header">Acciones</th>
-    </tr>
-    <% @requests.each do |request| %>
-    <tr>
-      <td><%= request.id %></td>
-      <td><%= request.created_at.strftime("%d/%m/%Y") %></td>
-      <td><%= @dictionary.workBuildings[request.work_building.to_sym] %></td>
-      <td><%= request.work_location %></td>
-      <td><%= request.requester_name %></td>
-      <td class= "actions-col">
-        <div class="grid-container">
-          <div class="grid-item">
-            <%= link_to "Ver solicitud", request, class: "btn btn-sm btn-info" %>
-          </div>
-        </div>
-      </td>
-    </tr>
-    <% end %>
-  </table>
+    <input name="filter" value="finished" type="checkbox" data-action="checkbox-filter#change" />Finalizadas
+
+    <input name="filter" value="outsourcing" type="checkbox" data-action="checkbox-filter#change" />Contratación Externa
+  </div>
+
+  <div id="requests" class="request-table">
+    <div class="row">
+      <div class="col-9" data-checkbox-filter-target="elements">  
+        <%= render partial: 'report_list', locals: { requests: @requests} %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%= link_to "Regresar a solicitudes", requests_path %>
