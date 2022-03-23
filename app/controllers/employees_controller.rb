@@ -6,13 +6,13 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     if params[:status]
-      if params[:status][0] || (params[:status][1] && params[:status][2])
+      if params[:value][0] || (params[:value][1] && value[:status][2])
         @employees = Employee.all
         @status = "both"
-      elsif params[:status][1]
+      elsif params[:value][1]
         @employees = Employee.where(status: true)
         @status = "active"
-      elsif params[:status][2]
+      elsif params[:value][2]
         @employees = Employee.where(status: false)
         @status = "inactive"
       else
@@ -84,13 +84,13 @@ class EmployeesController < ApplicationController
   end
 
   def status_filter
-    if params[:status][0] || (params[:status][1] && params[:status][2])
+    if params[:value][0] || (params[:value][1] && params[:value][2])
       @employees = Employee.all
       @status = "both"
-    elsif params[:status][1]
+    elsif params[:value][1]
       @employees = Employee.where(status: true)
       @status = "active"
-    elsif params[:status][2]
+    elsif params[:value][2]
       @employees = Employee.where(status: false)
       @status = "inactive"
     else

@@ -6,7 +6,7 @@ export default class extends Controller {
   change(event) {
     fetch(this.data.get("url"), { 
       method: 'POST', 
-      body: JSON.stringify( { value: [...document.getElementById("employees_status").children].map(option => option.value), status: [...document.getElementById("employees_status").children].map(option => option.checked)}),
+      body: JSON.stringify( { filter: [...document.getElementById("filters").children].map(option => option.value), value: [...document.getElementById("filters").children].map(option => option.checked)}),
       credentials: "include",
       dataType: 'script',
       headers: {

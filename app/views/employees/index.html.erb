@@ -1,18 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Estados</h1>
-<div data-controller="select-filter" data-select-filter-url="<%= status_filter_path %>">
-  <div class="form-group" id="employees_status">
-    <input name="status" value="both" type="checkbox" data-action="select-filter#change" />Todos
+<div data-controller="checkbox-filter" data-checkbox-filter-url="<%= status_filter_path %>">
+  <div class="form-group" id="filters">
+    <input name="status" value="both" type="checkbox" data-action="checkbox-filter#change" />Todos
 
-    <input name="status" value="active" type="checkbox" data-action="select-filter#change" />Activos
+    <input name="status" value="active" type="checkbox" data-action="checkbox-filter#change" />Activos
 
-    <input name="status" value="inactive" type="checkbox" data-action="select-filter#change" />Inactivos
+    <input name="status" value="inactive" type="checkbox" data-action="checkbox-filter#change" />Inactivos
   </div>
 
   <div id="employees">
     <div class="row">
-      <div class="col-9" data-select-filter-target="employees">  
+      <div class="col-9" data-checkbox-filter-target="employees">  
         <%= render partial: 'employee_list', locals: { employees: @employees} %>
       </div>
     </div>
