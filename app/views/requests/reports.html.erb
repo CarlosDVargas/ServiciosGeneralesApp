@@ -1,11 +1,11 @@
 <div class="form-group"> 
   <h4>Filtros</h4>
-  <%= form_tag requests_reports_path, method: :get do %>
+  <%= form_tag reports_path, method: :get do %>
     <p>
         <%= label :year, "Fecha", style: "display: block" %>
         <%= date_select :request_year, "request_year", options = { :include_blank => true, :start_year => 1990, :end_year => Date.current.year, :selected => { :year => @year.to_i, :month => @month.to_i, :day => @day.to_i } } %>
     </p>
-    <%= check_box_tag "rejected", "rejected", (@filter.include? "0") %> Rechazadas
+    <%= check_box_tag "denied", "denied", (@filter.include? "0") %> Rechazadas
     <%= check_box_tag "pending", "pending", (@filter.include? "1") %> Pendientes
     <%= check_box_tag "finished", "finished", (@filter.include? "2") %> Finalizadas
     <%= check_box_tag "outsourcing", "outsourcing", (@filter.include? "3") %> Contratación Externa

@@ -5,20 +5,24 @@ class EmployeesController < ApplicationController
 
   # GET /employees or /employees.json
   def index
-    if params[:active] && params[:inactive]
-      @status = "both"
-      @employees = Employee.all
-    elsif params[:active]
-      @status = "active"
-      @employees = Employee.where(status: true)
-    elsif params[:inactive]
-      @status = "inactive"
-      @employees = Employee.where(status: false)
+    if params[:status]
+      if params[:status][0] || (params[:status][1] && params[:status][2])
+        @employees = Employee.all
+        @status = "both"
+      elsif params[:status][1]
+        @employees = Employee.where(status: true)
+        @status = "active"
+      elsif params[:status][2]
+        @employees = Employee.where(status: false)
+        @status = "inactive"
+      else
+        @employees = Employee.all
+        @status = nil
+      end
     else
       @status = nil
       @employees = Employee.all
     end
-
   end
 
   # GET /employees/1 or /employees/1.json
@@ -79,7 +83,21 @@ class EmployeesController < ApplicationController
     end
   end
 
-  def statusfilter
+  def status_filter
+    if params[:status][0] || (params[:status][1] && params[:status][2])
+      @employees = Employee.all
+      @status = "both"
+    elsif params[:status][1]
+      @employees = Employee.where(status: true)
+      @status = "active"
+    elsif params[:status][2]
+      @employees = Employee.where(status: false)
+      @status = "inactive"
+    else
+      @employees = Employee.all
+      @status = nil
+    end
+    render partial: 'employees/employee_list', locals: { employees: @employees}
   end
 
   private
