@@ -21,8 +21,6 @@ export default class extends Controller {
   }
 
   dateSelect(event) {
-    console.log(document.getElementById("date_start").value)
-    console.log(document.getElementById("date_end").value)
     fetch(this.data.get("url"), { 
       method: 'POST', 
       body: JSON.stringify( { date_start: [document.getElementById("date_start").value], date_end: [document.getElementById("date_end").value] }),

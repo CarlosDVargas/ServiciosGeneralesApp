@@ -139,7 +139,7 @@ class RequestsController < ApplicationController
     @filter = ""
 
     #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
-
+    
     if params[:value]
       if params[:value][0]
         @filter += "0"
@@ -161,23 +161,23 @@ class RequestsController < ApplicationController
         #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
         #@requests += Request.where(status: "closed")
       end
-    end
-    
-    if @filter == ""
-      @requests = Request.all
-    end
 
-    if params[:date_start] || params[:date_end]
+      if @filter == ""
+        @requests = Request.all
+      end
+
       (@requests).each do |rqt|
-        if validateDate(params[:date_start][0], rqt.created_at.to_date.to_s, "start") && validateDate(params[:date_end][0], rqt.created_at.to_date.to_s, "end")
+        if validateDate(params[:filter][4], rqt.created_at.to_date.to_s, "start") && validateDate(params[:filter][5], rqt.created_at.to_date.to_s, "end")
           @tempRequests.push(rqt)
         end
       end
       @requests = @tempRequests
       @filter += "4"
-
     end
-
+    
+    if @filter == ""
+      @requests = Request.all
+    end
 
     render partial: 'requests/report_list', locals: { requests: @requests}
   end
