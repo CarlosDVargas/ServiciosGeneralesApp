@@ -94,7 +94,7 @@ class RequestsController < ApplicationController
 
     #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
 
-    if params[:rejected]
+    if params[:denied]
       @filter += "0"
       @requests += Request.where(status: "denied")
     end

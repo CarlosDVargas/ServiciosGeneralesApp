@@ -14,9 +14,17 @@ Rails.application.routes.draw do
   resources :feedbacks
 
   get '/employees/deleteConfirm', to: 'employees#deleteConfirm'
+
+  
   resources :employees
 
-  get '/requests/reports', to: 'requests#reports'
+  post 'status_filter', action: :status_filter, controller: 'employees'
+  
+  
+  get 'reports', to: 'requests#reports'
+  get 'filter_reports', to: 'requests#filter_reports'
+
+
   get 'ask_state', to: 'requests#ask_state'
   post 'ask_state', to: 'requests#search_state'
 

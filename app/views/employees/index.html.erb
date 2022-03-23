@@ -1,49 +1,25 @@
-<div class="form-group"> 
-  <%= form_tag employees_path, method: :get do %>
-    <%= check_box_tag "active", "active", @status == "both" || @status == "active" %> Activos
-    <%= check_box_tag "inactive", "inactive", @status == "both" || @status == "inactive" %> Inactivos
-    <br>
-    <%= submit_tag "Filtrar", :name => "statusfilter" %>
-  <% end %>
-</div>
-
 <p style="color: green"><%= notice %></p>
 
-<% case @status
-   when "active" %> <h1>Trabajadores activos</h1>
-<% when "inactive" %> <h1>Trabajadores inactivos</h1>
-<% else %> <h1>Lista de trabajadores</h1>
-<% end %>
+<h1>Estados</h1>
+<div data-controller="select-filter" data-select-filter-url="<%= status_filter_path %>">
+  <div class="form-group" id="employees_status">
+    <input name="status" value="both" type="checkbox" data-action="select-filter#change" />Todos
 
-<div id="employees">
+    <input name="status" value="active" type="checkbox" data-action="select-filter#change" />Activos
+
+    <input name="status" value="inactive" type="checkbox" data-action="select-filter#change" />Inactivos
+  </div>
+
+  <div id="employees">
     <div class="row">
-      <div class="col-9">  
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Cédula</th>
-              <th scope="col">Nombre Completo</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @employees.each do |employee| %>
-              <tr>
-                <td><%= employee.idCard %></td>
-                <td><%= employee.fullName %></td>
-                <td><%= employee.status ? "Activo" : "Inactivo" %></td>
-                <td><%= link_to "Mostrar empleado", employee,
-                                class: "btn btn-sm btn-info" %> | 
-                    <%= link_to "Editar empleado", edit_employee_path(employee), class: "btn btn-sm btn-success" %> | 
-                    <%= link_to "Eliminar empleado", employee, data: { turbo_method: :delete, turbo_confirm: "¿Eliminar este registro?" },
-                                                               class: "btn btn-sm btn-danger" %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+      <div class="col-9" data-select-filter-target="employees">  
+        <%= render partial: 'employee_list', locals: { employees: @employees} %>
       </div>
     </div>
+  </div>
 </div>
+
+
+
 
 <%= link_to "Nuevo empleado", new_employee_path %>
