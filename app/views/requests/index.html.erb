@@ -29,7 +29,12 @@
     <tr>
       <td><%= request.id %></td>
       <td><%= request.created_at.strftime("%d/%m/%Y") %></td>
-      <td><%= @dictionary.workBuildings[request.work_building.to_sym] %></td>
+      <td>
+      <% if !@dictionary.workBuildings[request.work_building.to_sym].nil? %>
+        <%= @dictionary.workBuildings[request.work_building.to_sym] %>
+      <% else %>
+        <%= request.work_building %>
+      <% end %></td>
       <td><%= request.work_location %></td>
       <td><%= request.requester_name %></td>
       <td class= "actions-col">

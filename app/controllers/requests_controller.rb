@@ -70,13 +70,19 @@ class RequestsController < ApplicationController
     status = @request.status
     case status
     when "in_process"
-      @request.update(status: "completed")
+      set_task
+      @task.update(completed?: true)
+      if analyse_tasks
+        @request.update(status: "completed")
+      end
       reload_index()
     when "completed"
-      @request.update(status: "closed")
-      reload_index()
-    when "closed"
-      @request.update(status: "in_process")
+      if params[:action] == "close"
+        @request.update(status: "closed")
+      else
+        reset_tasks
+        @request.update(status: "in_process")
+      end
       reload_index()
     else
       @request.update(status: "in_process")
@@ -202,13 +208,34 @@ class RequestsController < ApplicationController
     @status = params[:status]
   end
 
+  def set_task
+    @task = Task.find(params[:task_id])
+  end
+
   def reload_index()
     redirect_to requests_path, notice: "Se actualizó el estado de la solicitud"
   end
 
+  def analyse_tasks
+    tasks = @request.tasks
+    tasks.each do |task|
+      if !task.completed?
+        return false
+      end
+    end
+    return true
+  end
+
+  def reset_tasks
+    tasks = @request.tasks
+    tasks.each do |task|
+      task.update(completed?: true)
+    end
+  end
+
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
+    params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, :task_id, :action, deny_reasons: [:_destroy, :description, :request_id, :user_id])
   end
 
   def validateDate(datePartReaded, datePartDataBase)

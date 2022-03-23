@@ -1,7 +1,19 @@
 <tr>
   <td><%= employee.idCard %></td>
   <td><%= employee.fullName %></td>
-  <td>
-    <%= check_box_tag "selected_employees_to_#{list_type}[]", employee.id%> 
-  </td>
+  <% if list_type == "remove" %>
+    <td>
+      <% if employee.tasks.where(:request_id => @request.id).first.completed? %>
+        Sí
+      <% else %>
+        No
+      <% end %>
+    </td>
+  <% end %>
+  <% if @request.status != "completed" && @request.status != "closed" %>
+    <td>
+      <%= check_box_tag "selected_employees_to_#{list_type}[]", employee.id%> 
+    </td>
+  <% end %>
+  
 </tr>

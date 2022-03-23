@@ -6,24 +6,32 @@
         <tr>
           <th scope="col">Cédula</th>
           <th scope="col">Nombre Completo</th>
-          <th scope="col">Asignar a la solicitud</th>
+          <% if list_type == "remove"%>
+            <th scope="col"> Trabajo finalizado </th>
+          <% end %>
+          <% if @request.status != "completed" && @request.status != "closed" %>
+            <th scope="col"><%= list_type == "add" ? "Asignar trabajador" : "Remover trabajador" %></th>
+          <% end %>
+          
         </tr>
       </thead>
       <tbody>
           <% @employees.each do |employee| %>
             <% if list_type == "add" %>
               <% if employee.status && (!@request.employees.ids.include? employee.id) %>
-                <%= render '/tasks/admin_views/table_col', employee: employee, list_type: list_type  %>
+                <%= render "/tasks/admin_views/table_col", employee: employee, list_type: list_type %>
               <% end %>
             <% else %>
               <% if (@request.employees.ids.include? employee.id) %>
-                <%= render '/tasks/admin_views/table_col', employee: employee, list_type: list_type  %>
+                <%= render "/tasks/admin_views/table_col", employee: employee, list_type: list_type %>
               <% end %>
             <% end %>
           <% end %>
       </tbody>
     </table>
-    <%= f.hidden_field :request_id, value: request.id%>
-    <%= f.submit(list_type == 'add' ? 'Asignar empleados a la solicitud' : 'Desasignar empleados de la solicitud', class:"btn btn-primary") %>
+    <% if @request.status != "completed" && @request.status != "closed" %>
+      <%= f.hidden_field :request_id, value: request.id %>
+      <%= f.submit(list_type == "add" ? "Asignar empleados a la solicitud" : "Desasignar empleados de la solicitud", class: "btn btn-primary") %>
+    <% end %>
   </div>
 <% end %>

@@ -32,6 +32,6 @@
         <% end %>
       </div>
       <br>
-      <%= link_to "Finalizar trabajo", change_status_request_path(@request), class: "btn btn-primary" %>
+      <%= link_to "Finalizar trabajo", change_status_request_path(@request, :task_id => @task), class: "btn btn-primary" %>
     <% end %>
 </div>

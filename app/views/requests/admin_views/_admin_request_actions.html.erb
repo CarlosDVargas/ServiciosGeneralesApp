@@ -1,13 +1,17 @@
 <% case request.status
    when "pending" %>
     <div class="grid-item"> 
-      <%= link_to "Atender", change_status_request_path(request), class: "action-button" %>
+      <%= link_to "Atender", change_status_request_path(request), class: "action-button btn" %>
     </div>
     <div class="grid-item">
-      <%= link_to "Rechazar", edit_request_path(request), class: "action-button" %>
+      <%= link_to "Rechazar", edit_request_path(request), class: "action-button btn" %>
     </div>
 <% when "in_process" %>
     <div class="grid-item"> 
-      <%= link_to "Editar asignaciones", edit_task_path(:request => request.id), class: "action-button" %>
+      <%= link_to "Editar asignaciones", edit_task_path(:request => request.id), class: "action-button btn" %>
     </div>
+<% when "completed"%>
+  <div class="grid-item"> 
+      <%= link_to "Cerrar/Reabrir solicitud", edit_task_path(:request => request.id), class: "action-button btn" %>
+  </div>
 <% end %>

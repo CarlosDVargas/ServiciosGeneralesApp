@@ -1,26 +1,43 @@
 <div class="container">
   
-  <h1><%= (current_user.role == 'admin') ? 'Modificar asigaciones' : 'Trabajo asignado' %></h1>
+  <h1><%= (current_user.role == "admin") ? "Modificar asigaciones" : "Trabajo asignado" %></h1>
   <h4>Solicitud <%= @request.id %></h4>
-  <% if current_user.role == 'employee' %>
+  <% if current_user.role == "employee" %>
     <%= render "/tasks/employee_views/employee_view" %>
   <% else %>
-    <div id="add-employees" class="container">
-      <h6>Asignar trabajadores:</h6>
-      <%= render "/tasks/admin_views/employee_list", task: @task, request: @request, list_type: "add" %>
-    </div>
-
-    <br>
+    
+    <% if @request.status != "completed" && @request.status != "closed" %>
+      <div id="add-employees" class="container">
+        <h6>Asignar trabajadores:</h6>
+        <%= render "/tasks/admin_views/employee_list", task: @task, request: @request, list_type: "add" %>
+      </div>
+      <br>
+    <% end %>
 
     <div id="remove-employees" class="container">
-      <h6>Remover trabajadores:</h6>
+      <% if @request.status != "completed" && @request.status != "closed" %>
+        <h6>Remover trabajadores:</h6>
+      <% else %>
+        <h6>Trabajadores asignados:</h6>
+      <% end %>
       <%= render "/tasks/admin_views/employee_list", task: @task, request: @request, list_type: "remove" %>
     </div>
   <% end %>
   
   <br>
 
+  
+  <% if @request.status == "completed" %>
+    <%= link_to "Cerrar solicitud", change_status_request_path(@request, :action => "close"), class: "btn btn-primary" %>
+    <br>
+    <br>
+    <%= link_to "Reabrir solicitud", change_status_request_path(@request, :action => "open"), class: "btn btn-primary" %>
+    <br>
+    <br>
+  <% end %>
+  
+
   <div>
-    <%= link_to 'Volver a la lista de solicitudes', requests_path, class: 'btn btn-primary' %>
+    <%= link_to "Volver a la lista de solicitudes", requests_path, class: "btn btn-primary" %>
   </div>
 </div>
