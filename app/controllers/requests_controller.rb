@@ -121,20 +121,15 @@ class RequestsController < ApplicationController
       @requests = Request.all
     end
 
-    if params[:request_year]
-      @year = params[:request_year].values[0]
-      @month = params[:request_year].values[1]
-      @day = params[:request_year].values[2]
-
-      if @year != "" || @month != "" || @day != ""
-        (@requests).each do |rqt|
-          if validateDate(@year.to_i, rqt.created_at.year) && validateDate(@month.to_i, rqt.created_at.month) && validateDate(@day.to_i, rqt.created_at.day)
-            @tempRequests.push(rqt)
-          end
+    if params[:date_start] || params[:date_end]
+      (@requests).each do |rqt|
+        if validateDate(params[:date_start][0], rqt.created_at.to_date.to_s, "start") && validateDate(params[:date_end][0], rqt.created_at.to_date.to_s, "end")
+          @tempRequests.push(rqt)
         end
-        @requests = @tempRequests
-        @filter += "4"
       end
+      @requests = @tempRequests
+      @filter += "4"
+
     end
   end
 
@@ -145,30 +140,45 @@ class RequestsController < ApplicationController
 
     #Se agrega un número a la variable filter después de aplicar un filtro determinado, para leerlo en la vista y dejar los filtros activos
 
-    if params[:value][0]
-      @filter += "0"
-      @requests += Request.where(status: "denied")
-    end
+    if params[:value]
+      if params[:value][0]
+        @filter += "0"
+        @requests += Request.where(status: "denied")
+      end
 
-    if params[:value][1]
-      @filter += "1"
-      @requests += Request.where(status: "pending")
-    end
+      if params[:value][1]
+        @filter += "1"
+        @requests += Request.where(status: "pending")
+      end
 
-    if params[:value][2]
-      @filter += "2"
-      @requests += Request.where(status: "closed")
-    end
+      if params[:value][2]
+        @filter += "2"
+        @requests += Request.where(status: "closed")
+      end
 
-    if params[:value][3]
-      @filter += "3"
-      #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
-      #@requests += Request.where(status: "closed")
+      if params[:value][3]
+        @filter += "3"
+        #En la siguiente línea se agregará la manera de filtrado para cuando sean contratación externa
+        #@requests += Request.where(status: "closed")
+      end
     end
-
+    
     if @filter == ""
       @requests = Request.all
     end
+
+    if params[:date_start] || params[:date_end]
+      (@requests).each do |rqt|
+        if validateDate(params[:date_start][0], rqt.created_at.to_date.to_s, "start") && validateDate(params[:date_end][0], rqt.created_at.to_date.to_s, "end")
+          @tempRequests.push(rqt)
+        end
+      end
+      @requests = @tempRequests
+      @filter += "4"
+
+    end
+
+
     render partial: 'requests/report_list', locals: { requests: @requests}
   end
 
@@ -254,7 +264,13 @@ class RequestsController < ApplicationController
     params.require(:request).permit(:requester_name, :requester_extension, :requester_phone, :requester_id, :requester_mail, :requester_type, :student_id, :student_assosiation, :work_location, :work_building, :work_type, :work_description, deny_reasons: [:_destroy, :description, :request_id, :user_id])
   end
 
-  def validateDate(datePartReaded, datePartDataBase)
-    return datePartReaded == 0 || datePartReaded == datePartDataBase
+  def validateDate(datePartReaded, datePartDataBase, order)
+    if order == "start"
+      return datePartReaded == "" || datePartReaded <= datePartDataBase
+    elsif order == "end"
+      return datePartReaded == "" || datePartReaded >= datePartDataBase
+    else
+      return false
+    end
   end
 end
