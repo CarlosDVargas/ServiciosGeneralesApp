@@ -84,8 +84,8 @@
     <% end %>
   </div>
   
-  <% if request.status == "denied" && !current_user %>
-    <div>
+  <% if request.status == "denied" %>
+    <div class="container">
       <label>Razones de rechazo de solicitud:</label>
       <div>
         <ul>
