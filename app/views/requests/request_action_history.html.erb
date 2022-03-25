@@ -1,0 +1,31 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Historial de acciones de la solicitud</h1>
+
+<div id="tasks">
+    <div class="row">
+        <div class="col-9">  
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Responsable</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @history.each do |action| %>
+                        <tr>
+                            <td><%= User.find(id: action.user_id).first.name %></td>
+                            <td><%= action.created_at %></td>
+                            <td><%= action.description %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<%= link_to "Regresar a solicitud", request_path(@request) %>

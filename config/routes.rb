@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   get 'ask_state', to: 'requests#ask_state'
   post 'ask_state', to: 'requests#search_state'
 
+  get 'request_action_history', to: 'requests#request_action_history'
+
   resources :requests do
     member do
       get :change_status

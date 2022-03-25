@@ -1,9 +1,10 @@
 require "./app/models/dictionary.rb"
 
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show edit update destroy change_status ]
+  before_action :set_request, only: %i[ show edit update destroy change_status request_action_history ]
   before_action :set_dictionary, only: %i[new show edit update index create reports request_filter]
   before_action :set_status, only: %i[index show]
+  after_action :register_request_action, only:%i[edit update change_status]
 
   # GET /requests or /requests.json
   def index
@@ -198,6 +199,15 @@ class RequestsController < ApplicationController
     else
       render "ask_state"
     end
+  end
+
+  def register_request_action
+    newAction = ActionController::Parameters.new(request_id: @request.id, user_id: current_user.id).permit(:request_id, :user_id)
+    @request_action = RequestAction.new(newAction)
+  end
+
+  def request_action_history
+    @history = RequestAction.where(request_id: @request.id)
   end
 
   private

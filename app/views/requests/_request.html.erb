@@ -102,5 +102,6 @@
   <% if request.status == "closed" && !current_user %>
     <%= link_to "Enviar feedback", new_feedback_path, class: "btn btn-primary" %>
   <% end %>
+  <%= link_to "Ver bitácora", request_action_history_path(:id => request.id), class: "btn btn-primary" %>
 
 </div>

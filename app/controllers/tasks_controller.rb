@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   before_action :set_request, only: %i[ new edit ]
   before_action :set_employees, only: %i[ new edit ]
   before_action :set_dictionary, only: %i[ edit ]
+  after_action :register_request_action, only: %i[new edit]
 
   # GET /tasks or /tasks.json
   def index
@@ -66,6 +67,11 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def register_request_action
+    newAction = ActionController::Parameters.new(request_id: @request.id, user_id: current_user.id).permit(:request_id, :user_id)
+    @request_action = RequestAction.new(newAction)
   end
 
   private
