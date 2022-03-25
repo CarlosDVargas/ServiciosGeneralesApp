@@ -19,4 +19,6 @@ class Request < ApplicationRecord
   has_many :tasks
   has_many :employees, through: :tasks
   has_many :feedbacks
+  has_many :request_actions
+  has_many :users, through: :request_actions
 end

@@ -10,6 +10,9 @@ class User < ApplicationRecord
 
   has_many :observations
 
+  has_many :request_actions
+  has_many :requests, through: :request_actions
+
   def set_default_role
     self.role ||= :employee
   end
