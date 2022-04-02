@@ -1,5 +1,6 @@
 require "./app/models/dictionary.rb"
 
+# Controller for all the actions that require use of a task object
 class TasksController < ApplicationController
   before_action :set_request, only: %i[ new edit ]
   before_action :set_employees, only: %i[ new edit ]
@@ -69,6 +70,7 @@ class TasksController < ApplicationController
     end
   end
 
+  # Falta documentar
   def register_request_action
     newAction = ActionController::Parameters.new(request_id: @request.id, user_id: current_user.id).permit(:request_id, :user_id)
     @request_action = RequestAction.new(newAction)
@@ -78,10 +80,12 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
 
+  # Take observations from Observation table depending the task_id and user_id
   def set_observations
     @observations = Observation.where(task_id: @task.id, user_id: current_user.id)
   end
 
+  # Take the task from the Task table depending the request_id and employee_id
   def set_task
     employee_id = Employee.where(user_id: current_user.id).first.id
     if @request.nil?
@@ -90,26 +94,32 @@ class TasksController < ApplicationController
     @task = Task.where(employee_id: employee_id, request_id: @request.id).first
   end
 
+  # Find the request using the request_id from the params
   def set_request
     @request = Request.find(params[:request])
   end
 
+  # Take an especific employee from the Employee table depending the user_id
   def employee(id)
     @employee = Employee.find(id)
   end
 
+  # Take all the employees from the Employee table
   def set_employees
     @employees = Employee.all
   end
 
+  # Take the employees from the Employee table depending the ids from employees to add
   def set_employees_for_create
     @employees = params[:selected_employees_to_add]
   end
 
+  # Take the employees from the Employee table depending the ids from employees to remove
   def set_employees_for_destroy
     @employees = params[:selected_employees_to_remove]
   end
 
+  # Create a new dictionary instance
   def set_dictionary
     @dictionary = Dictionary.new()
   end

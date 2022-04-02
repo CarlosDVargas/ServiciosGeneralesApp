@@ -1,3 +1,4 @@
+# Controller that handles all the actions that require use of an employee object
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
   before_action :set_employee_deleteConfirm, only: %i[ deleteConfirm ]
@@ -5,40 +6,50 @@ class EmployeesController < ApplicationController
 
   # GET /employees or /employees.json
   def index
-    if params[:status]
-      if params[:value][0] || (params[:value][1] && value[:status][2])
-        @employees = Employee.all
-        @status = "both"
-      elsif params[:value][1]
-        @employees = Employee.where(status: true)
-        @status = "active"
-      elsif params[:value][2]
-        @employees = Employee.where(status: false)
-        @status = "inactive"
+    if ask_for_user_logged_in && ask_for_user_role("admin")
+      if params[:status]
+        if params[:value][0] || (params[:value][1] && value[:status][2])
+          @employees = Employee.all
+          @status = "both"
+        elsif params[:value][1]
+          @employees = Employee.where(status: true)
+          @status = "active"
+        elsif params[:value][2]
+          @employees = Employee.where(status: false)
+          @status = "inactive"
+        else
+          @employees = Employee.all
+          @status = nil
+        end
       else
-        @employees = Employee.all
         @status = nil
+        @employees = Employee.all
       end
-    else
-      @status = nil
-      @employees = Employee.all
     end
   end
 
   # GET /employees/1 or /employees/1.json
   def show
+    if ask_for_user_logged_in && ask_for_user_role("admin")
+    end
   end
 
   # GET /employees/new
   def new
-    @employee = Employee.new
+    if ask_for_user_logged_in && ask_for_user_role("admin")
+      @employee = Employee.new
+    end
   end
 
   # GET /employees/1/edit
   def edit
+    if ask_for_user_logged_in && ask_for_user_role("admin")
+    end
   end
 
   def deleteConfirm
+    if ask_for_user_logged_in && ask_for_user_role("admin")
+    end
   end
 
   # POST /employees or /employees.json
@@ -83,10 +94,11 @@ class EmployeesController < ApplicationController
         format.json { head :no_content }
       end
     else
-      redirect_to '#', notice: "No se puede eliminar un trabajador que haya sido asignado a una solicitud"
+      redirect_to "#", notice: "No se puede eliminar un trabajador que haya sido asignado a una solicitud"
     end
   end
 
+  # Falta documentación
   def status_filter
     if params[:value][0] || (params[:value][1] && params[:value][2])
       @employees = Employee.all
@@ -111,6 +123,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
   end
 
+  # Select the employee to be deleted
   def set_employee_deleteConfirm
     @employee = Employee.find(params[:format])
   end
@@ -120,6 +133,7 @@ class EmployeesController < ApplicationController
     params.require(:employee).permit(:idCard, :fullName, :email, :status)
   end
 
+  # Set the status of the employee
   def set_status
     @status = params[:status]
   end

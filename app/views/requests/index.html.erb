@@ -43,10 +43,10 @@
             <%= link_to "Ver solicitud", request, class: "action-button" %>
           </div>
           
-          <% if current_user.role == "admin"%>
-            <%= render 'requests/admin_views/admin_request_actions', request: request %>
+          <% if current_user.role == "admin" %>
+            <%= render "requests/admin_views/admin_request_actions", request: request %>
           <% else %>
-            <%= render 'requests/employee_views/employee_request_actions', request: request %>
+            <%= render "requests/employee_views/employee_request_actions", request: request %>
           <% end %>
 
         </div>
