@@ -1,10 +1,11 @@
-<h1>Editar feedback</h1>
-
-<%= render "form", feedback: @feedback %>
-
-<br>
-
-<div>
-  <%= link_to "Mostrar feedback", @feedback %> |
-  <%= link_to "Regresar a feedbacks", feedbacks_path %>
+<div class="container">
+  <div class="data-form">
+    <h1>Editar feedback</h1>
+    <%= render "form", feedback: @feedback %>
+    <br>
+  </div>
+  <div>
+    <%= link_to "Mostrar feedback", @feedback %> |
+    <%= link_to "Regresar a feedbacks", feedbacks_path %>
+  </div>
 </div>

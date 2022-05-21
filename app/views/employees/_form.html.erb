@@ -1,37 +1,33 @@
-<%= form_with(model: employee) do |form| %>
-  <% if employee.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(employee.errors.count, "error") %> evitó que este empleado fuera agregado:</h2>
-
-      <ul>
-        <% employee.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="container">
+  <%= form_with(model: employee) do |form| %>
+    <% if employee.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(employee.errors.count, "error") %> evitó que este empleado fuera agregado:</h2>
+        <ul>
+          <% employee.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form.label "Cédula: ", style: "display: block" %>
+      <%= form.text_field :idCard, class:"form-control" %>
+    </div>
+    <div class="field">
+      <%= form.label "Nombre Completo: ", style: "display: block" %>
+      <%= form.text_field :fullName, class:"form-control" %>
+    </div>
+    <div class="field">
+      <%= form.label "Correo electrónico: ", style: "display: block" %>
+      <%= form.text_field :email, class:"form-control" %>
+    </div>
+    <div class="field">
+      <%= form.label "Estado: ", style: "display: block" %>
+      <%= form.check_box :status, class:"form-check" %>
+    </div>
+    <div>
+      <%= form.submit(employee.new_record? ? "Registrar" : "Actualizar", class: "btn btn-primary") %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label "Cédula: ", style: "display: block" %>
-    <%= form.text_field :idCard %>
-  </div>
-
-  <div>
-    <%= form.label "Nombre Completo: ", style: "display: block" %>
-    <%= form.text_field :fullName %>
-  </div>
-
-  <div>
-    <%= form.label "Correo electrónico: ", style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label "Estado: ", style: "display: block" %>
-    <%= form.check_box :status %>
-  </div>
-
-  <div>
-    <%= form.submit(employee.new_record? ? "Registrar" : "Actualizar", class: "btn btn-sm btn-success") %>
-  </div>
-<% end %>
+</div>

@@ -1,9 +1,10 @@
-<h1>Nuevo empleado</h1>
-
-<%= render "form", employee: @employee %>
-
-<br>
-
-<div>
-  <%= link_to "Regresar a lista", employees_path %>
+<div class="container">
+  <div class="data-form">
+    <h1>Nuevo empleado</h1>
+    <%= render "form", employee: @employee %>
+    <br>
+    <div>
+      <%= link_to "Regresar a lista", employees_path %>
+    </div>
+  </div>
 </div>

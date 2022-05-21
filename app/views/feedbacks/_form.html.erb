@@ -1,55 +1,53 @@
-<%= form_with(model: feedback) do |form| %>
-  <% if feedback.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
-
-      <ul>
-        <% feedback.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="container">
+  <%= form_with(model: feedback) do |form| %>
+    <% if feedback.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+        <ul>
+          <% feedback.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form.label :observations, style: "display: block" %>
+      <%= form.text_field :observations %>
+    </div>
+    <div class="field">
+      <%= form.label :satisfaction, style: "display: block" %>
+      <div>
+        <ul>
+          <li>
+            <%= form.radio_button :satisfaction, 1, :name => "satisfaction"%>
+            <label>1</label>
+            <span>Muy negativa</span>
+          </li>
+          <li>
+            <%= form.radio_button :satisfaction, 2, :name => "satisfaction"%>
+            <label>2</label>
+            <span>Regular</span>
+          </li>
+          <li>
+            <%= form.radio_button :satisfaction, 3, :name => "satisfaction"%>
+            <label>3</label>
+            <span>Buena</span>
+          </li>
+          <li>
+            <%= form.radio_button :satisfaction, 4, :name => "satisfaction"%>
+            <label>4</label>
+            <span>Muy buena</span>
+          </li>
+          <li>
+            <%= form.radio_button :satisfaction, 5, :name => "satisfaction"%>
+            <label>5</label>
+            <span>Excelente</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <%= form.submit(feedback.new_record? ? "Guardar" : "Actualizar", class: "btn btn-sm btn-success") %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :observations, style: "display: block" %>
-    <%= form.text_field :observations %>
-  </div>
-
-  <div>
-    <%= form.label :satisfaction, style: "display: block" %>
-    <div>
-      <ul>
-        <li>
-          <%= form.radio_button :satisfaction, 1, :name => "satisfaction"%>
-          <label>1</label>
-          <span>Muy negativa</span>
-        </li>
-        <li>
-          <%= form.radio_button :satisfaction, 2, :name => "satisfaction"%>
-          <label>2</label>
-          <span>Regular</span>
-        </li>
-        <li>
-          <%= form.radio_button :satisfaction, 3, :name => "satisfaction"%>
-          <label>3</label>
-          <span>Buena</span>
-        </li>
-        <li>
-          <%= form.radio_button :satisfaction, 4, :name => "satisfaction"%>
-          <label>4</label>
-          <span>Muy buena</span>
-        </li>
-        <li>
-          <%= form.radio_button :satisfaction, 5, :name => "satisfaction"%>
-          <label>5</label>
-          <span>Excelente</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-    
-  <div>
-    <%= form.submit(feedback.new_record? ? "Guardar" : "Actualizar", class: "btn btn-sm btn-success") %>
-  </div>
-<% end %>
+</div>
