@@ -11,40 +11,40 @@
     </div>
   <% end %>
 
-  <div id="requester_information" class="form-group"> 
+  <div id="requester_information" class="data-form"> 
     <p>Información del solicitante</p>
     <div>
       <p>
         <%= form.label "Nombre completo", style: "display: block" %>
-        <%= form.text_field :requester_name %>
+        <%= form.text_field :requester_name, class: "form-control" %>
       </p>
     </div>
 
     <div>
       <p>
         <%= form.label "Extensión telefónica", style: "display: block" %>
-        <%= form.text_field :requester_extension %>
+        <%= form.text_field :requester_extension, class: "form-control" %>
       </p>
     </div>
 
     <div>
       <p>
         <%= form.label "Número telefónico", style: "display: block" %>
-        <%= form.text_field :requester_phone %>
+        <%= form.text_field :requester_phone, class: "form-control" %>
       </p>
     </div>
 
     <div>
       <p>
         <%= form.label "Número de identificación", style: "display: block" %>
-        <%= form.text_field :requester_id %>
+        <%= form.text_field :requester_id, class: "form-control" %>
       </p>
     </div>
 
     <div>
       <p>
         <%= form.label "Dirección de correo electrónico", style: "display: block" %>
-        <%= form.text_field :requester_mail %>
+        <%= form.text_field :requester_mail, class: "form-control" %>
       </p>
     </div>
 
@@ -52,7 +52,7 @@
       <div>
         <p>
           <%= form.label "Tipo de solicitante", style: "display: block" %>
-          <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each()), {}, data: { select_target: "select", action: "select#select" } %>
+          <%= form.select :requester_type, options_for_select(@dictionary.requesterTypes.invert().each()), {}, data: { select_target: "select", action: "select#select" }, class: "form-select"%>
         </p>
       </div>
 
@@ -61,7 +61,7 @@
         <div>
           <p>
             <%= form.label "Carnet de estudiante", style: "display: block" %>
-            <%= form.text_field :student_id %>
+            <%= form.text_field :student_id, class: "form-control" %>
           </p>
         </div>
 
@@ -76,17 +76,17 @@
 
   </div>
   
-  <div id="work_information" class="form-group">
+  <div id="work_information" class="data-form">
     <p>Información del trabajo a solicitud</p>
     <div data-controller="select" data-select-hidden-class="hidden">
       <p>
         <%= form.label "Edificio", style: "display: block" %>
         <div class="grid-container">
           <div class="grid-item">
-            <%= form.select :work_building, options_for_select(@dictionary.workBuildings.invert().each()), {}, data: { select_target: "select", action: "select#select" } %>
+            <%= form.select :work_building, options_for_select(@dictionary.workBuildings.invert().each()), {}, data: { select_target: "select", action: "select#select" }, class: "form-select" %>
           </div>
           <div class="grid-item" id="work_building" data-select-target="hidden">
-            <%= form.text_field :work_building, id: "work-building-field", data: { select_target: "field" } %>
+            <%= form.text_field :work_building, id: "work-building-field", data: { select_target: "field" }, class: "form-control" %>>
           </div>
         </div>
       </p>
@@ -95,7 +95,7 @@
     <div>
       <p>
         <%= form.label "Lugar", style: "display: block" %>
-        <%= form.text_field :work_location %>
+        <%= form.text_field :work_location, class: "form-control" %>
       </p>
     </div>
 
@@ -104,10 +104,10 @@
         <%= form.label "Tipo de trabajo", style: "display: block" %>
         <div class="grid-container">
           <div class="grid-item">
-            <%= form.select :work_type, options_for_select(@dictionary.workTypes.invert().each()), {}, data: { select_target: "select", action: "select#select" } %>
+            <%= form.select :work_type, options_for_select(@dictionary.workTypes.invert().each()), {}, data: { select_target: "select", action: "select#select" }, class: "form-select" %>
           </div>
           <div class="grid-item" id="work_type" data-select-target="hidden">
-            <%= form.text_field :work_type, id: "work-type-field", data: { select_target: "field" } %>
+            <%= form.text_field :work_type, id: "work-type-field", data: { select_target: "field" }, class: "form-control" %>
           </div>
           </div>
         
@@ -117,7 +117,7 @@
     <div>
       <p>
         <%= form.label "Tipo de trabajo", style: "display: block" %>
-        <%= form.text_area :work_description %>
+        <%= form.text_area :work_description, class: "form-control" %>
       </p>
     </div>
   </div>

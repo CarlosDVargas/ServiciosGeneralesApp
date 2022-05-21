@@ -40,19 +40,16 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 
 # Use Byebug fot debugging Rails Applications
-gem 'byebug', '~> 9.0', '>= 9.0.6'
+gem "byebug", "~> 9.0", ">= 9.0.6"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
-# gem "tzinfo" 
-gem 'tzinfo-data'
+# gem "tzinfo"
+gem "tzinfo-data"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
-
-# gem "bootstrap"
-gem "bootstrap", "~> 5.1"
 
 # Use Sass to process CSS
 gem "sassc-rails"
@@ -70,10 +67,10 @@ group :development do
   gem "web-console"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
+  gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem "spring"
 end
 
 group :test do

@@ -1,14 +1,7 @@
-.student-info {
-    display: none;
-}
-
-.form-group {
+.data-form {
     margin: 20px;
     padding: 10px;
     border: 1px solid rgba(164, 212, 240, 0.658);
     background-color: lightblue;
-}
-
-.other-selected {
-    display: none;
+    border-radius: 10px;
 }

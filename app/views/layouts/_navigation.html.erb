@@ -1,52 +1,49 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <%= link_to "Page Name", root_path, class: "navbar-brand", id: "logo" %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <% if current_user %>
+  <div class="container">
+    <%= link_to "Page Name", root_path, class: "navbar-brand", id: "logo", rel: "prev" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <% if current_user %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Solicitudes
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to "Listar", requests_path, class: "dropdown-item" %>
+              <% if current_user.role == "admin" %>
+                <%= link_to "Reportes", reports_path, class: "dropdown-item" %>
+              <% end %>
+            </div>
+          </li>
+          <% if current_user.role == "admin" %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Solicitudes
+                Empleados
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to "Listar", requests_path, class: "dropdown-item" %>
-                <% if current_user.role == "admin" %>
-                  <%= link_to "Reportes", reports_path, class: "dropdown-item" %>
-                <% end %>
+                <%= link_to "Agregar", new_employee_path, class: "dropdown-item" %>
+                <%= link_to "Listar", employees_path, class: "dropdown-item" %>
               </div>
             </li>
-            <% if current_user.role == "admin" %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Empleados
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <%= link_to "Agregar", new_employee_path, class: "dropdown-item" %>
-                  <%= link_to "Listar", employees_path, class: "dropdown-item" %>
-                </div>
-              </li>
-            <% end %>
-            
-            <li class="nav-item dropdown">
+          <% end %>
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Cuenta
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to "Editar cuenta", edit_user_registration_path, class: "dropdown-item" %>
-              <%= button_to 'Cerrar sesión', destroy_user_session_path, class:"dropdown-item btn btn-default" ,method: :delete%>
+              <%= button_to "Cerrar sesión", destroy_user_session_path, class: "dropdown-item btn btn-default", method: :delete %>
             </div>
           </li>
-          <% else %>
-            <li class="nav-item dropdown">
-              <%= link_to 'Iniciar Sesión', new_user_session_path, class:"nav-link"%>
-            </li>
-          <% end %>
-          
-        </ul>
-      </div>
+        <% else %>
+          <li class="nav-item dropdown">
+            <%= link_to "Iniciar Sesión", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
+  </div>
 </nav>
