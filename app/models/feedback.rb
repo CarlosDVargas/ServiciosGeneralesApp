@@ -3,4 +3,5 @@ class Feedback < ApplicationRecord
 
     validates :observations, presence: true
     validates :satisfaction, presence: true
+    validates :request_id, presence: true
 end
